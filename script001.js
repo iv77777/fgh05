@@ -1208,6 +1208,10 @@ sortValue.addEventListener("change", function () {
     document.querySelector('.popupDey__sortC_js').style.display = "block";
     document.querySelector('.popupDey__sortM_js').style.display = 'block';
   }
+  //сортировка Среднее за месяц.
+  if (Number(this.value) == 27) {
+    openSortPopup2(arrayValue, 27);
+  }
 });
 
 // <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
@@ -1257,6 +1261,7 @@ function openSortPopup(arrayValue, sortValueChange) {
     f2();
     function f2() {
       let indexDey = 31;
+
       f3();
       function f3() {
         let arrayDey = [];
@@ -1267,7 +1272,6 @@ function openSortPopup(arrayValue, sortValueChange) {
         });
 
         if (arrayDey.length > 0) {
-          
           if (sortValueChange === 26){
             renderTable3(indexDey, months[indexMonths], year, indexTable, arrayDey);
           }else{
@@ -1300,6 +1304,80 @@ function openSortPopup(arrayValue, sortValueChange) {
     arrowAddRemove2();
   }, 200);
 }
+function openSortPopup2(arrayValue, sortValueChange) {
+  selectButton.classList.remove('_active');
+  let indexTable = 1;
+  popupRenderDey.innerHTML = '';
+  popupDey.classList.add('_active');
+
+  // все года
+  const years = [];
+  // выбераем года
+  arrayValue.forEach(item => {
+    // если в массиве years нету етого значения то возвращает false если есть то true
+    let i = years.includes(item.year);
+    if (!i) {
+      years.push(item.year)
+    }
+  });
+  // сортируем от большого к меншому
+  years.sort(function (a, b) {
+    return b - a;
+  });
+
+  let indexYears = 0;
+
+  f1();
+  function f1() {
+    let year = years[indexYears];
+    //месеа 
+    const months = [];
+    // выбераем месяца в текущем годе
+    arrayValue.forEach(item => {
+      if (item.year == year) {
+        let i = months.includes(item.month);
+        if (!i) {
+          months.push(item.month)
+        }
+      }
+    });
+    // сортируем от большого к меншому
+    months.sort(function (a, b) {
+      return b - a;
+    });
+    let indexMonths = 0;
+
+    f2();
+    function f2() {
+      let arrayMonth = [];
+      arrayValue.forEach(item => {
+        if (item.month == months[indexMonths] && item.year == year) {
+          arrayMonth.push(item);
+        }
+      });
+
+      if (arrayMonth.length > 0) {
+        renderTable4(months[indexMonths], year, indexTable, arrayMonth);
+        indexTable++;
+      }
+
+      indexMonths++;
+      if (months[indexMonths]) {
+        f2();
+      }
+    }
+    indexYears++
+    if (years[indexYears]) {
+      f1();
+    }
+
+  }
+  setTimeout(() => {
+    arrowAddRemove2();
+  }, 200);
+}
+
+
 function newValuePopup() {
   let arrayValue = getLocalStorage(oneInputValue, false);
   valuesLength.innerText = arrayValue.length;
@@ -1380,6 +1458,49 @@ function renderTable3(day, month, year, counterTableId, arrayDey) {
 
   renderhourse3(itemBig, valueAverage, valueSmall, idTable);
 }
+// рендерит таблицы в попап popupRenderDey
+function renderTable4(month, year, counterTableId, arrayMonth) {
+  let idTable = `table${counterTableId}`;
+  let itemBig;
+  let valueSmall;
+  let valueSum = 0;
+  let valueAverage;
+  // больше за месяц
+  arrayMonth.sort(function (a, b) {
+    return b.value - a.value;
+  });
+  itemBig = arrayMonth[0];
+  // -------------------
+  // менше за месяц
+  arrayMonth.sort(function (a, b) {
+    return a.value - b.value;
+  });
+  valueSmall = arrayMonth[0];
+  // --------------------
+  arrayMonth.forEach(item => {
+    valueSum = Number(valueSum) + Number(item.value);
+  });
+  valueAverage = valueSum / arrayMonth.length;
+
+  const months = ['Січень', 'Лютий', 'Березень', 'Квітень', 'Травень', 'Червень', 'Липень', 'Серпень', 'Вересень', 'Жовтень', 'Листопад', 'Грудень'];
+
+  const htmlTable = `
+      <div class="popupDeyTable popupDeyTable_js _table${month - 1}-${year}" data-big="${itemBig.value}" data-small="${valueSmall.value}" data-average="${valueAverage.toFixed(3)}">
+        <div class="flex-block tebleTitle">
+          <p>${months[month - 1]} ${year}</p>
+          <p>
+          ${arrayMonth.length} зн.
+          </p>
+        </div>
+        <table class="popup__table sortPopupDeyTable_js" id="${idTable}" cellpadding="100" border="2" width="100%">
+
+        </table>
+      </div>
+    `;
+  popupRenderDey.insertAdjacentHTML('beforeend', htmlTable);
+
+  renderhourse4(itemBig, valueAverage, valueSmall, idTable);
+}
 
 // рендерит сортировку Средние по часам в таблицы.
 function renderhourse3(itemBig, valueAverage, valueSmall, idTable) {
@@ -1399,6 +1520,40 @@ function renderhourse3(itemBig, valueAverage, valueSmall, idTable) {
      <tr class="popup__table-tr_js td__value-valueSmall">
         <td class="td__value">мiнiм.з</td>
         <td class="td__value">${valueSmall.date.split(',')[1]}</td>
+        <td class="td__value ${itemBig.background2}">${valueSmall.value1}</td>
+        <td class="td__value ${itemBig.background}">${valueSmall.value}</td>
+      </tr>
+  `;
+  const popupTable = document.querySelector(`#${idTable}`);
+  popupTable.insertAdjacentHTML('beforeend', valueHtml);
+  // popupTable.insertAdjacentHTML('afterbegin', valueHtml);
+}
+// рендерит сортировку Средние по часам в таблицы.
+function renderhourse4(itemBig, valueAverage, valueSmall, idTable) {
+  let month1 = itemBig.month;
+  if (month1 < 10){
+    month1 = `0${itemBig.month}`;
+  }
+  let month2 = valueSmall.month;
+  if (month2 < 10){
+    month2 = `0${valueSmall.month}`;
+  }
+  let valueHtml = `
+     <tr class="popup__table-tr_js td__value-valueBig">
+        <td class="td__value">макс.з</td>
+        <td class="td__value">${itemBig.numberDeta}.${month1}. (${itemBig.date.split(',')[1]})</td>
+        <td class="td__value ${itemBig.background2}">${itemBig.value1}</td>
+        <td class="td__value ${itemBig.background}">${itemBig.value}</td>
+      </tr>
+     <tr class="popup__table-tr_js td__value-valueAverage">
+        <td class="td__value">серед.з</td>
+        <td class="td__value"></td>
+        <td class="td__value ${itemBig.background2}">${itemBig.value1}</td>
+        <td class="td__value ${itemBig.background}">${valueAverage.toFixed(3)}</td>
+      </tr>
+     <tr class="popup__table-tr_js td__value-valueSmall">
+        <td class="td__value">мiнiм.з</td>
+        <td class="td__value">${valueSmall.numberDeta}.${month2}. (${valueSmall.date.split(',')[1]})</td>
         <td class="td__value ${itemBig.background2}">${valueSmall.value1}</td>
         <td class="td__value ${itemBig.background}">${valueSmall.value}</td>
       </tr>
@@ -1731,11 +1886,10 @@ calendarPopap.addEventListener('click', (e) => {
 
     // ------------------------------------------
     if (e.target.closest('.calendar__dey_js ')
-      && e.target.classList.contains('_active')
-      && calendarMonthInner.classList.contains('_active')) {
+        && e.target.classList.contains('_active')
+        && calendarMonthInner.classList.contains('_active')) {
 
       const calendarPopap = document.querySelector('.calendar-popap_js');
-      
       calendarPopap.classList.remove('_active');//скрывает календарь
       calendarBtn.innerHTML = e.target.dataset.dey;
       const popupReverse = document.querySelector('.popup__reverse_js');
@@ -1784,11 +1938,13 @@ calendarPopap.addEventListener('click', (e) => {
 
 function scrollDey1(data){
   const scrolElement = document.querySelector(`._table${data}`);
-  scrolling(scrolElement.offsetTop - 73);
-}
-function scrollDey2(data){
-  const scrolElement = document.querySelector(`._teblepopup${data}`); 
   if (scrolElement){
+    scrolling(scrolElement.offsetTop - 73);
+  }
+}
+function scrollDey2(data) {
+  const scrolElement = document.querySelector(`._teblepopup${data}`);
+  if (scrolElement) {
     scrolElement.classList.add('_active-scrol-tim');
     scrolElement.classList.add('_active-scrol');
     setTimeout(() => {
@@ -1799,8 +1955,18 @@ function scrollDey2(data){
     }, 6000);
     scrolling(scrolElement.offsetTop);
   }
- 
+
 }
+function scrollDey3(data){
+  let data1 = data.split('-');
+  let data2 = `${data1[1]}-${data1[2]}`;
+  const scrolElement = document.querySelector(`._table${data2}`);
+  if (scrolElement){
+    scrolling(scrolElement.offsetTop - 73);
+    console.log('scrolling()');
+  }
+}
+
 
 function scrolling(top) {
   const popupTop = document.querySelector(".popup_js");
