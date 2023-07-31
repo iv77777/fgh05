@@ -307,6 +307,7 @@ body {
   display: none;
 }
 .popup__reverse {
+  display: none;
   position: absolute;
   right: 62px;
   top: 5px;
