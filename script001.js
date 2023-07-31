@@ -26,27 +26,25 @@ const calendarBtn = document.querySelector('.calendar__btn_js');
 const popupDey = document.querySelector('.popupDey_js');
 const popupRenderDey = document.querySelector('.popupRenderDey_js');
 
-const popupButtonUp = document.querySelector(".popupButtonUp_js");
-const calendarMonthWrapper = document.querySelector(".calendar__month-wrapper_js");
-const calendarPopap = document.querySelector(".calendar-popap_js");
-const popupDeySortBtn = document.querySelectorAll(".popupDey__sort-btn_js");
+const popupButtonUp = document.querySelector('.popupButtonUp_js');
+const calendarMonthWrapper = document.querySelector('.calendar__month-wrapper_js');
+const calendarPopap = document.querySelector('.calendar-popap_js');
+const popupDeySortBtn = document.querySelectorAll('.popupDey__sort-btn_js');
 
 const fon = document.querySelector('.fon_js');
 
 // Польот значений
-const audioFly = new Audio("mp3/flight.mp3");
+const audioFly = new Audio('mp3/flight.mp3');
 audioFly.currentTime = 0;
 
 // клик по клавиатури
-const audioClick = new Audio("mp3/click.mp3");
+const audioClick = new Audio('mp3/click.mp3');
 audioClick.currentTime = 0;
 
-// ключи 
+// ключи
 const keyActiveColor = 'fgh-activeColor';
 const inputValue = 'fgh-inputValue';
 const oneInputValue = 'fgh-oneInputValue';
-
-
 
 // создает календарь переданого года и рендерит в переданный html елемент
 createCalendar(2022, calendarMonthWrapper);
@@ -54,11 +52,10 @@ createCalendar(2022, calendarMonthWrapper);
 // <<<<<<<<<<<<<<<< function >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 // создает календарь переданого года и рендерит в переданный html елемент
 function createCalendar(createYear, elementHtml) {
-
-  let year = createYear;// год
-  let month = 0;//Месяц (от 0 до 11)
-  let dayWeek;// день нидели в котором начинается месяц 0- ето воскресения (Недiля)
-  let monthDeyLength;//количество дней в месяце
+  let year = createYear; // год
+  let month = 0; //Месяц (от 0 до 11)
+  let dayWeek; // день нидели в котором начинается месяц 0- ето воскресения (Недiля)
+  let monthDeyLength; //количество дней в месяце
 
   // Очещаем елемент на html странице куда будум рендерити
   elementHtml.innerHTML = '';
@@ -72,13 +69,13 @@ function createCalendar(createYear, elementHtml) {
   // <<<<<<<<<<<<<<<<<<<<<<<<<<< function >>>>>>>>>>>>>>>>>>>>>>>>>>>>
   // создает дату
   function createDate(year, month, dey) {
-    let date = new Date(year, month, dey);//(год  / месяц от 0 до 11 / число)
+    let date = new Date(year, month, dey); //(год  / месяц от 0 до 11 / число)
     return date;
   }
   // выщитует количество дней в месяце
   function calculateDatesMonth(year, month) {
     let date1 = createDate(year, month, 1); //(год / месяц от 0 до 11 / число)
-    let date2 = createDate(year, month + 1, 1);//(год  / месяц от 0 до 11 / число)
+    let date2 = createDate(year, month + 1, 1); //(год  / месяц от 0 до 11 / число)
     let date3 = Math.round((date2 - date1) / 1000 / 3600 / 24); //вищитуем количестао дней
     return date3;
   }
@@ -88,20 +85,33 @@ function createCalendar(createYear, elementHtml) {
     let dayWeek = date.getDay();
     return dayWeek;
   }
-  // Рендерит месяц 
+  // Рендерит месяц
   function renderCalendar(htmlElement) {
-    const months = ['Січень', 'Лютий', 'Березень', 'Квітень', 'Травень', 'Червень', 'Липень', 'Серпень', 'Вересень', 'Жовтень', 'Листопад', 'Грудень'];
+    const months = [
+      'Січень',
+      'Лютий',
+      'Березень',
+      'Квітень',
+      'Травень',
+      'Червень',
+      'Липень',
+      'Серпень',
+      'Вересень',
+      'Жовтень',
+      'Листопад',
+      'Грудень',
+    ];
 
     // ------------------------------------------
-    let calendarMonthInner = document.createElement("div");
-    calendarMonthInner.className = "calendar__month-inner calendar__month-inner_js";
-    let calendarMonthName = document.createElement("div");
-    calendarMonthName.className = "calendar__month-name";
+    let calendarMonthInner = document.createElement('div');
+    calendarMonthInner.className = 'calendar__month-inner calendar__month-inner_js';
+    let calendarMonthName = document.createElement('div');
+    calendarMonthName.className = 'calendar__month-name';
     calendarMonthName.innerHTML = months[month];
     calendarMonthInner.insertAdjacentElement('afterbegin', calendarMonthName);
 
-    let calendarList = document.createElement("ul");
-    calendarList.className = "calendar__list";
+    let calendarList = document.createElement('ul');
+    calendarList.className = 'calendar__list';
     // -------------------------------------------
 
     //получаем количество дней в месяце
@@ -142,40 +152,39 @@ function createCalendar(createYear, elementHtml) {
 }
 // Уберает активный цвет input
 function removeActiveColor() {
-  inputColor.forEach(item => {
+  inputColor.forEach((item) => {
     item.classList.remove('_active-color');
     if (item.classList.contains('background__acent-2')) {
-      item.dataset.background = "#b83ce6";
+      item.dataset.background = '#b83ce6';
     }
     if (item.classList.contains('background__acent-1')) {
-      item.dataset.background = "#ffeb3b";
+      item.dataset.background = '#ffeb3b';
     }
   });
 }
 // устанавлюваем активный цвет input
 function addActiveColor() {
-  inputColor.forEach(item => {
+  inputColor.forEach((item) => {
     item.classList.add('_active-color');
     if (item.classList.contains('background__acent-2')) {
-      item.dataset.background = "#ffeb3b";
+      item.dataset.background = '#ffeb3b';
     }
     if (item.classList.contains('background__acent-1')) {
-      item.dataset.background = "#b83ce6";
+      item.dataset.background = '#b83ce6';
     }
   });
 }
 
-// прощытует инпуты 
+// прощытует инпуты
 function input1JsInput2Js() {
   if (input1Js.value > 0 && input2Js.value > 0) {
     input4Js.value = input1Js.value * input2Js.value * input3Js.value;
 
     if (input5Js.value > 0) {
-      input7Js.value = (input4Js.value / input5Js.value * input6Js.value).toFixed(2);
+      input7Js.value = ((input4Js.value / input5Js.value) * input6Js.value).toFixed(2);
     } else {
       input7Js.value = '';
     }
-
   } else {
     input4Js.value = '';
     input7Js.value = '';
@@ -184,7 +193,7 @@ function input1JsInput2Js() {
 
 // Уберает вивраный для записи инпут
 function removeSelectInput() {
-  writeInput.forEach(item => {
+  writeInput.forEach((item) => {
     item.classList.remove('writeNumber_js');
   });
 }
@@ -210,10 +219,10 @@ function selectInput(element) {
 
 // Добавляет число в input
 function writeNumber(number) {
-  writeInput.forEach(item => {
+  writeInput.forEach((item) => {
     if (item.classList.contains('writeNumber_js')) {
       if (!isNaN(item.value + number)) {
-        let numberValue = item.value + number
+        let numberValue = item.value + number;
         item.value = numberValue;
       }
     }
@@ -222,7 +231,7 @@ function writeNumber(number) {
 
 // Удаляет число с инпута
 function numberDelete() {
-  writeInput.forEach(item => {
+  writeInput.forEach((item) => {
     if (item.classList.contains('writeNumber_js')) {
       let inputValue = item.value.slice(0, -1);
       item.value = inputValue;
@@ -235,7 +244,7 @@ function audioPlay(audio) {
   audio.play();
 }
 
-//добавляет обект objectValue в LocalStorage по ключу keyName 
+//добавляет обект objectValue в LocalStorage по ключу keyName
 function postLocalStorage(keyName, object) {
   // переобразовуем масив value в строку и записываем в valueText
   let objectText = JSON.stringify(object);
@@ -272,7 +281,7 @@ function isEmpty(obj) {
 // получаем значения всех инпутов и создаем с ними обект
 function getValueInput() {
   let objectValue = {};
-  writeInput.forEach(item => {
+  writeInput.forEach((item) => {
     if (item.id == 'input-1_js') {
       objectValue.input1Js = item.value;
     }
@@ -303,34 +312,40 @@ function changeBorder(colorBorder) {
 function changeBgNumbers(color) {
   const numbers = document.querySelectorAll('.number_js');
   const numberDelete = document.querySelector('.number__delete_js');
-  numbers.forEach(item => {
+  numbers.forEach((item) => {
     item.style.backgroundColor = color;
   });
   numberDelete.style.backgroundColor = color;
 }
 
 // выдиляет дни в календаре
-function addActiveDeyCalendar (obgectDey){
+function addActiveDeyCalendar(obgectDey) {
   const calendarDeyAll = document.querySelectorAll('.calendar__dey_js ');
-  calendarDeyAll.forEach(element => {
+  calendarDeyAll.forEach((element) => {
     element.classList.remove('_active');
   });
 
   setTimeout(() => {
-    const calendarDey = calendarMonthWrapper.querySelector(`._dey${obgectDey.numberDeta}-${obgectDey.month - 1}-${obgectDey.year}`);
-    calendarDey.classList.add('_active'); 
-  }, 1); 
+    const calendarDey = calendarMonthWrapper.querySelector(
+      `._dey${obgectDey.numberDeta}-${obgectDey.month - 1}-${obgectDey.year}`,
+    );
+    if (calendarDey) {
+      calendarDey.classList.add('_active');
+    }
+  }, 1);
 }
 // рендерит переданный обект в начало попапа
 function renderValuePopup(arrayValue) {
   if (!arrayValue.value1) {
-    arrayValue.value1 = "";
+    arrayValue.value1 = '';
   }
   // выдиляет дни в календаре
   addActiveDeyCalendar(arrayValue);
 
   let valueHtml = `
-     <tr class="popup__table-tr_js _teblepopup${arrayValue.numberDeta}-${arrayValue.month - 1}-${arrayValue.year}" id="${arrayValue.miliseconds}">
+     <tr class="popup__table-tr_js _teblepopup${arrayValue.numberDeta}-${arrayValue.month - 1}-${
+    arrayValue.year
+  }" id="${arrayValue.miliseconds}">
         <td class="td__date">${arrayValue.date}</td>
         <td class="${arrayValue.background2} td__value">${arrayValue.value1}</td>
         <td class="${arrayValue.background} td__value">${arrayValue.value}</td>
@@ -383,7 +398,7 @@ function addValue(resultValue, backgroundColor) {
       transition: all .5s;
     `;
 
-  // когда клон долитит до папки 
+  // когда клон долитит до папки
   resultValueKlone.addEventListener('transitionend', function () {
     resultValueKlone.remove();
   });
@@ -391,7 +406,6 @@ function addValue(resultValue, backgroundColor) {
 
 // иметирует польот значения до иконки удалить  в попапе 2
 function FlyremoveValue(resultValue) {
-
   //присваюваем позицею с верху
   const resultValueKloneTop = resultValue.getBoundingClientRect().top;
   //присваюваем коорденаты с лева
@@ -411,7 +425,7 @@ function FlyremoveValue(resultValue) {
   let resultValueClientWidth = resultValue.clientWidth;
 
   // коорденаты с лева
-  const folderjsFlyLeft = - ((resultValueClientWidth / 2) - 30);
+  const folderjsFlyLeft = -(resultValueClientWidth / 2 - 30);
   // коорденаты с верху
   const folderjsFlyTop = 5;
 
@@ -425,7 +439,7 @@ function FlyremoveValue(resultValue) {
     `;
   }, 10);
 
-  // когда клон долитит до папки 
+  // когда клон долитит до папки
   resultValue.addEventListener('transitionend', function () {
     resultValue.remove();
     const popupTableTrAll = document.querySelectorAll('.popup__table-tr_js');
@@ -460,18 +474,18 @@ function resetMiniPopup() {
 }
 
 // удаляет стрелку пролистования вверх у попапах
-function removeArrowTop(){
+function removeArrowTop() {
   popupButtonUp.classList.remove('_active');
 }
 // в попапе popupTable если нужно то показует или удаляет стрелку пролистувания вверх
 function arrowAddRemove1() {
-  if (popupTable.getBoundingClientRect().top < popupTop.offsetHeight -3) {
+  if (popupTable.getBoundingClientRect().top < popupTop.offsetHeight - 3) {
     if (!popupButtonUp.classList.contains('_active')) {
-      popupButtonUp.classList.add('_active')
+      popupButtonUp.classList.add('_active');
     }
   } else {
     if (popupButtonUp.classList.contains('_active')) {
-      popupButtonUp.classList.remove('_active')
+      popupButtonUp.classList.remove('_active');
     }
   }
 }
@@ -479,59 +493,59 @@ function arrowAddRemove1() {
 function arrowAddRemove2() {
   if (popupRenderDey.getBoundingClientRect().top < 55) {
     if (!popupButtonUp.classList.contains('_active')) {
-      popupButtonUp.classList.add('_active')
+      popupButtonUp.classList.add('_active');
     }
   } else {
     if (popupButtonUp.classList.contains('_active')) {
-      popupButtonUp.classList.remove('_active')
+      popupButtonUp.classList.remove('_active');
     }
   }
 }
 function popupDeySortC(arrayElements, htmlElement, average) {
   let arrayObgects = [];
-  arrayElements.forEach(item => {
+  arrayElements.forEach((item) => {
     arrayObgects.push({
       [average]: item.dataset[average],
-      item: item
+      item: item,
     });
   });
   // больше
   arrayObgects.sort(function (a, b) {
     return b[average] - a[average];
   });
-  arrayObgects.forEach(item => {
+  arrayObgects.forEach((item) => {
     htmlElement.insertAdjacentElement('beforeend', item.item);
   });
 }
 // находити все елементы на странице по "classElemetAll" и добавляет к ним класс "addClass"
 function addClassAll(classElemetAll, addClass) {
-  document.querySelectorAll(classElemetAll).forEach(item => {
+  document.querySelectorAll(classElemetAll).forEach((item) => {
     item.classList.add(addClass);
   });
 }
 // находити все елементы на странице по "classElemetAll" и удаляет у них класс "removeClass"
 function removeClassAll(classElemetAll, removeClass) {
-  document.querySelectorAll(classElemetAll).forEach(item => {
+  document.querySelectorAll(classElemetAll).forEach((item) => {
     item.classList.remove(removeClass);
   });
 }
 // У всех елементов масива "popupDeySortBtn" удаляет класс "className"
 function removeAllClass(popupDeySortBtn, className) {
-  popupDeySortBtn.forEach(item => {
+  popupDeySortBtn.forEach((item) => {
     item.classList.remove(className);
   });
 }
 // <<<<<<<<<<<<<<<< // function >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 
 // =================== при загрузке странице =============================
-// Подставляем цвета с LocalStorage 
+// Подставляем цвета с LocalStorage
 const colorDD = getLocalStorage(keyActiveColor);
 if (colorDD !== null) {
   if (colorDD.color) {
     buttonColorJs.classList.add('_active-color');
     addActiveColor();
-    changeBgNumbers("#ffeb3b");
-    changeBorder("#ffeb3b");
+    changeBgNumbers('#ffeb3b');
+    changeBorder('#ffeb3b');
   } else {
     buttonColorJs.classList.remove('_active-color');
     removeActiveColor();
@@ -558,12 +572,11 @@ if (isEmpty(objectLocalStorage)) {
 
 // <<<<<<<<<<<<<<<< при клике на странице >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 document.addEventListener('click', (e) => {
-
-  // при клики по клавиатупи 
+  // при клики по клавиатупи
   if (e.target.closest('.number_js')) {
     // Добавляет число в input
     writeNumber(e.target.innerText);
-    // прощытует инпуты 
+    // прощытует инпуты
     input1JsInput2Js();
 
     const obgectValue = getValueInput();
@@ -572,7 +585,7 @@ document.addEventListener('click', (e) => {
     // audioPlay(audioClick);
   }
 
-  // при клики на input 
+  // при клики на input
   if (e.target.closest('.writeInput_js')) {
     // Встанавлювает етот input для записи чисел
     selectInput(e.target);
@@ -583,7 +596,7 @@ document.addEventListener('click', (e) => {
     // audioPlay(audioClick);
     // Удаляет число с инпута
     numberDelete();
-    // прощытует инпуты 
+    // прощытует инпуты
     input1JsInput2Js();
 
     const obgectValue = getValueInput();
@@ -636,7 +649,7 @@ document.addEventListener('click', (e) => {
       changeBgNumbers(input5Js.dataset.background);
       // изменяет цвет бордера клавиатуры на переданный цвет
       changeBorder(input5Js.dataset.background);
-      return
+      return;
     }
     if (input5Js.classList.contains('writeNumber_js')) {
       // Встанавлювает input для записи чисел
@@ -645,9 +658,12 @@ document.addEventListener('click', (e) => {
       changeBgNumbers(input2Js.dataset.background);
       // изменяет цвет бордера клавиатуры на переданный цвет
       changeBorder(input2Js.dataset.background);
-      return
+      return;
     }
-    if (!input2Js.classList.contains('writeNumber_js') || !input5Js.classList.contains('writeNumber_js')) {
+    if (
+      !input2Js.classList.contains('writeNumber_js') ||
+      !input5Js.classList.contains('writeNumber_js')
+    ) {
       // Встанавлювает input для записи чисел
       selectInput(input2Js);
       // изменяет цвет кнопок клавиатуры
@@ -673,21 +689,21 @@ document.addEventListener('click', (e) => {
     });
     popupTable.innerHTML = '';
 
-    arrayValue.forEach(item => {
+    arrayValue.forEach((item) => {
       // рендерит етот обект в попап
       renderValuePopup(item);
     });
 
-    setTimeout(()=>{
-      arrowAddRemove1(); 
+    setTimeout(() => {
+      arrowAddRemove1();
     }, 200);
   }
 
   // при клики скрывает попап
   if (e.target.closest('.popup__close_js')) {
     const popupTable2Html = document.querySelector('.popup__table2_js');
-    if (popupTable2Html){
-      popupTable.width = "100%";
+    if (popupTable2Html) {
+      popupTable.width = '100%';
       popupTable2Html.remove();
     }
     popup.classList.remove('_active');
@@ -698,17 +714,17 @@ document.addEventListener('click', (e) => {
   }
 
   // если кликнули по кнопке реверс в попапе
-  if (e.target.closest('.popup__reverse_js')){
-    e.target.classList.add('_reverse'); 
+  if (e.target.closest('.popup__reverse_js')) {
+    e.target.classList.add('_reverse');
     let arrayValue = getLocalStorage(oneInputValue, false);
     valuesLength.innerText = arrayValue.length;
     openSortPopup(arrayValue);
   }
-   
-  if (e.target.closest('.calendar__btn_js')){
+
+  if (e.target.closest('.calendar__btn_js')) {
     calendarPopap.classList.add('_active');
     let arrayValue = getLocalStorage(oneInputValue, false);
-    arrayValue.forEach(element => {
+    arrayValue.forEach((element) => {
       addActiveDeyCalendar(element);
     });
   }
@@ -716,12 +732,12 @@ document.addEventListener('click', (e) => {
   // при клики скрывает popupDey
   if (e.target.closest('.popupDey__close_js')) {
     document.querySelector('.popupDey__sort_js').classList.remove('_twoSort');
-    removeAllClass(popupDeySortBtn, "_twoSortActive");
-    document.querySelector('.popupDey__sortC_js').style.display = "none";
+    removeAllClass(popupDeySortBtn, '_twoSortActive');
+    document.querySelector('.popupDey__sortC_js').style.display = 'none';
     document.querySelector('.popupDey__sortM_js').style.display = 'none';
     popupDey.classList.remove('_active');
     popupReverse.classList.remove('_reverse');
-    calendarBtn.innerHTML = "По дате";
+    calendarBtn.innerHTML = 'По дате';
     // делает вибранным "самые новые"
     sortValue.options[0].selected = true;
     // сортируем попак от самих новых
@@ -740,7 +756,7 @@ document.addEventListener('click', (e) => {
     let Minutes;
     // доставляем ноль если менше 10 минут
     if (date.getMinutes() < 10) {
-      Minutes = "0" + date.getMinutes();
+      Minutes = '0' + date.getMinutes();
     } else {
       Minutes = date.getMinutes();
     }
@@ -760,24 +776,23 @@ document.addEventListener('click', (e) => {
     saveObgect.year = year;
     saveObgect.Minutes = Minutes;
     saveObgect.miliseconds = Date.now();
-    saveObgect.date = `${DATE1}, ${DATE2} `
+    saveObgect.date = `${DATE1}, ${DATE2} `;
     saveObgect.value = input7Js.value;
     saveObgect.value1 = input1Js.value;
     saveObgect.value2 = input2Js.value;
     saveObgect.value3 = input5Js.value;
 
-    
     let backgroundColor1;
     let backgroundColor2;
 
     if (input7Js.classList.contains('_active-color')) {
-      saveObgect.background = "background__acent-2";
-      saveObgect.background2 = "background__acent-1";
+      saveObgect.background = 'background__acent-2';
+      saveObgect.background2 = 'background__acent-1';
       backgroundColor1 = '#b83ce6';
       backgroundColor2 = '#ffeb3b';
     } else {
-      saveObgect.background = "background__acent-1";
-      saveObgect.background2 = "background__acent-2";
+      saveObgect.background = 'background__acent-1';
+      saveObgect.background2 = 'background__acent-2';
       backgroundColor1 = '#ffeb3b';
       backgroundColor2 = '#b83ce6';
     }
@@ -799,10 +814,10 @@ document.addEventListener('click', (e) => {
   // при клики делает активным или нет удаления
   if (e.target.closest('.select__button_js')) {
     if (!popupReverse.classList.contains('_reverse')) {
-      e.target.classList.toggle("_active");
+      e.target.classList.toggle('_active');
       if (!e.target.classList.contains('_active')) {
         const popupTableTrAll = document.querySelectorAll('.popup__table-tr_js');
-        popupTableTrAll.forEach(item => {
+        popupTableTrAll.forEach((item) => {
           item.classList.remove('_delete');
         });
         // обнуляет MiniPopup
@@ -820,7 +835,7 @@ document.addEventListener('click', (e) => {
         popup2.classList.remove('_active');
 
         const popup2Radios = document.querySelectorAll('.popup2_radio_js');
-        popup2Radios.forEach(item => {
+        popup2Radios.forEach((item) => {
           item.classList.remove('_active');
         });
       } else {
@@ -830,10 +845,10 @@ document.addEventListener('click', (e) => {
 
       const popupTableTrAll = document.querySelectorAll('.popup__table-tr_js');
       let tableDelete = false;
-      popupTableTrAll.forEach(item => {
+      popupTableTrAll.forEach((item) => {
         if (item.classList.contains('_delete')) {
           tableDelete = true;
-          return
+          return;
         }
       });
 
@@ -852,7 +867,7 @@ document.addEventListener('click', (e) => {
       e.target.closest('.popup2_radio_js').classList.remove('_active');
     } else {
       const popup2Radios = document.querySelectorAll('.popup2_radio_js');
-      popup2Radios.forEach(item => {
+      popup2Radios.forEach((item) => {
         item.classList.remove('_active');
       });
       if (!e.target.closest('.popup2_radio_js').classList.contains('_not-active')) {
@@ -862,11 +877,11 @@ document.addEventListener('click', (e) => {
   }
 
   // пири клики в попапе 2 на кнопку "ОК"
-  if (e.target.closest(".popup2__button_js")) {
+  if (e.target.closest('.popup2__button_js')) {
     // скрываем попап 2
     const popup2 = document.querySelector('.popup2_js');
     popup2.classList.remove('_active');
-    fon.style.zIndex = "";
+    fon.style.zIndex = '';
 
     // делаем кнопку выбрать не активной
     selectButton.classList.remove('_active');
@@ -885,13 +900,13 @@ document.addEventListener('click', (e) => {
       let itemId;
       // удаляем со страницы
       const popupTableTrAll = document.querySelectorAll('.popup__table-tr_js');
-      popupTableTrAll.forEach(item => {
+      popupTableTrAll.forEach((item) => {
         if (item.classList.contains('_delete')) {
           itemId = item.id;
 
           // удаляем с localStorage
           const arrayLocalStorage = getLocalStorage(oneInputValue);
-          let filteredArray = arrayLocalStorage.filter(value => value.miliseconds != itemId);
+          let filteredArray = arrayLocalStorage.filter((value) => value.miliseconds != itemId);
           postLocalStorage(oneInputValue, filteredArray);
 
           // польот значений в корзину а затем удаляем
@@ -903,7 +918,7 @@ document.addEventListener('click', (e) => {
       });
     } else {
       const popupTableTrAll = document.querySelectorAll('.popup__table-tr_js');
-      popupTableTrAll.forEach(item => {
+      popupTableTrAll.forEach((item) => {
         if (item.classList.contains('_delete')) {
           item.classList.remove('_delete');
         }
@@ -928,8 +943,7 @@ document.addEventListener('click', (e) => {
 
   // при клики выбираем поле для удаления
   if (e.target.closest('.popup__table-tr_js')) {
-
-    if (selectButton.classList.contains("_active")) {
+    if (selectButton.classList.contains('_active')) {
       if (!e.target.closest('.popup__table-tr_js').classList.contains('_delete')) {
         e.target.closest('.popup__table-tr_js').classList.add('_delete');
 
@@ -958,20 +972,20 @@ document.addEventListener('click', (e) => {
     removeClassAll('.td__value-valueSmall', '_active');
     if (popupReverse.classList.contains('_reverse')) {
       sortPopupDeyTable2();
-    } else if (document.querySelector('.popupDey__sort_js').classList.contains('_twoSort')){
-      if (document.querySelector('.popupDey__sort_js').classList.contains('_twoSortActive')){
+    } else if (document.querySelector('.popupDey__sort_js').classList.contains('_twoSort')) {
+      if (document.querySelector('.popupDey__sort_js').classList.contains('_twoSortActive')) {
         let arrayValue = getLocalStorage(oneInputValue, false);
         openSortPopup(arrayValue, 26);
         document.querySelector('.popupDey__sort_js').classList.remove('_twoSortActive');
-      }else{
+      } else {
         const popupDeyTable = document.querySelectorAll('.popupDeyTable');
         popupRenderDey.innerText = '';
-        popupDeySortC(popupDeyTable, popupRenderDey, "big");
-        removeAllClass(popupDeySortBtn, "_twoSortActive");
+        popupDeySortC(popupDeyTable, popupRenderDey, 'big');
+        removeAllClass(popupDeySortBtn, '_twoSortActive');
         document.querySelector('.popupDey__sort_js').classList.add('_twoSortActive');
         addClassAll('.td__value-valueBig', '_active');
       }
-    }else{
+    } else {
       sortPopupDeyTable();
     }
   }
@@ -987,8 +1001,8 @@ document.addEventListener('click', (e) => {
     } else {
       const popupDeyTable = document.querySelectorAll('.popupDeyTable');
       popupRenderDey.innerText = '';
-      removeAllClass(popupDeySortBtn, "_twoSortActive");
-      popupDeySortC(popupDeyTable, popupRenderDey, "average");
+      removeAllClass(popupDeySortBtn, '_twoSortActive');
+      popupDeySortC(popupDeyTable, popupRenderDey, 'average');
       document.querySelector('.popupDey__sortC_js').classList.add('_twoSortActive');
       addClassAll('.td__value-valueAverage', '_active');
     }
@@ -1005,8 +1019,8 @@ document.addEventListener('click', (e) => {
     } else {
       const popupDeyTable = document.querySelectorAll('.popupDeyTable');
       popupRenderDey.innerText = '';
-      popupDeySortC(popupDeyTable, popupRenderDey, "small");
-      removeAllClass(popupDeySortBtn, "_twoSortActive");
+      popupDeySortC(popupDeyTable, popupRenderDey, 'small');
+      removeAllClass(popupDeySortBtn, '_twoSortActive');
       document.querySelector('.popupDey__sortM_js').classList.add('_twoSortActive');
       addClassAll('.td__value-valueSmall', '_active');
     }
@@ -1015,7 +1029,6 @@ document.addEventListener('click', (e) => {
   if (e.target.closest('.popupButtonUp_js')) {
     scrolling(0);
   }
-  
 });
 // <<<<<<<<<<<<<<<< // при клике на странице >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 
@@ -1026,10 +1039,8 @@ popupDey.addEventListener('scroll', function (e) {
   arrowAddRemove2();
 });
 
-
-
 // сортировка попапа
-sortValue.addEventListener("change", function () {
+sortValue.addEventListener('change', function () {
   let arrayValue = getLocalStorage(oneInputValue, false);
   valuesLength.innerText = arrayValue.length;
 
@@ -1045,12 +1056,12 @@ sortValue.addEventListener("change", function () {
     arrayValue.sort(function (a, b) {
       return a.value - b.value;
     });
-    arrayValue.forEach(item => {
+    arrayValue.forEach((item) => {
       // рендерит етот обект в попап
       renderValuePopup(item);
     });
   }
-    
+
   // сортировка По значению менше
   if (Number(this.value) == 3) {
     popupTable.innerHTML = '';
@@ -1058,7 +1069,7 @@ sortValue.addEventListener("change", function () {
       return b.value - a.value;
     });
 
-    arrayValue.forEach(item => {
+    arrayValue.forEach((item) => {
       // рендерит етот обект в попап
       renderValuePopup(item);
     });
@@ -1070,57 +1081,57 @@ sortValue.addEventListener("change", function () {
     arrayValue.sort(function (a, b) {
       return b.miliseconds - a.miliseconds;
     });
-    arrayValue.forEach(item => {
+    arrayValue.forEach((item) => {
       // рендерит етот обект в попап
       renderValuePopup(item);
     });
   }
   // выборка по времини и сортировка от Больше. за 1-сутки
   if (Number(this.value) == 5) {
-    bigTime(arrayValue, 86400000)
+    bigTime(arrayValue, 86400000);
   }
   // выборка по времини и сортировка от Больше. за 2-суток
   if (Number(this.value) == 8) {
-    bigTime(arrayValue, 86400000 * 2)
+    bigTime(arrayValue, 86400000 * 2);
   }
   // выборка по времини и сортировка от Больше. за 3-суток
   if (Number(this.value) == 10) {
-    bigTime(arrayValue, 86400000 * 3)
+    bigTime(arrayValue, 86400000 * 3);
   }
   // выборка по времини и сортировка от Больше. за 4-суток
   if (Number(this.value) == 12) {
-    bigTime(arrayValue, 86400000 * 4)
+    bigTime(arrayValue, 86400000 * 4);
   }
   // выборка по времини и сортировка от Больше. за 5-суток
   if (Number(this.value) == 14) {
-    bigTime(arrayValue, 86400000 * 5)
+    bigTime(arrayValue, 86400000 * 5);
   }
   // выборка по времини и сортировка от Больше. за 6-суток
   if (Number(this.value) == 16) {
-    bigTime(arrayValue, 86400000 * 6)
+    bigTime(arrayValue, 86400000 * 6);
   }
   // выборка по времини и сортировка от Больше. за 7-суток
   if (Number(this.value) == 18) {
-    bigTime(arrayValue, 86400001 * 7)
+    bigTime(arrayValue, 86400001 * 7);
   }
   // выборка по времини и сортировка от Больше. за 8-суток
   if (Number(this.value) == 20) {
-    bigTime(arrayValue, 86400000 * 8)
+    bigTime(arrayValue, 86400000 * 8);
   }
   // выборка по времини и сортировка от Больше. за 9-суток
   if (Number(this.value) == 22) {
-    bigTime(arrayValue, 86400000 * 9)
+    bigTime(arrayValue, 86400000 * 9);
   }
   // выборка по времини и сортировка от Больше. за 10-суток
   if (Number(this.value) == 24) {
-    bigTime(arrayValue, 86400000 * 10)
+    bigTime(arrayValue, 86400000 * 10);
   }
 
   function bigTime(arrayValue, time) {
     const miliseconds = Date.now();
     let newArray = [];
 
-    arrayValue.forEach(item => {
+    arrayValue.forEach((item) => {
       if (miliseconds - item.miliseconds < time) {
         newArray.push(item);
       }
@@ -1131,7 +1142,7 @@ sortValue.addEventListener("change", function () {
     newArray.sort(function (a, b) {
       return a.value - b.value;
     });
-    newArray.forEach(item => {
+    newArray.forEach((item) => {
       // рендерит етот обект в попап
       renderValuePopup(item);
     });
@@ -1146,41 +1157,41 @@ sortValue.addEventListener("change", function () {
   }
   // выборка по времини и сортировка от Меньше за 3-суток
   if (Number(this.value) == 11) {
-    smallTime(arrayValue, 86400000 * 3)
+    smallTime(arrayValue, 86400000 * 3);
   }
   // выборка по времини и сортировка от Меньше за 4-суток
   if (Number(this.value) == 13) {
-    smallTime(arrayValue, 86400000 * 4)
+    smallTime(arrayValue, 86400000 * 4);
   }
   // выборка по времини и сортировка от Меньше за 5-суток
   if (Number(this.value) == 15) {
-    smallTime(arrayValue, 86400000 * 5)
+    smallTime(arrayValue, 86400000 * 5);
   }
   // выборка по времини и сортировка от Меньше за 6-суток
   if (Number(this.value) == 17) {
-    smallTime(arrayValue, 86400000 * 6)
+    smallTime(arrayValue, 86400000 * 6);
   }
   // выборка по времини и сортировка от Меньше за 7-суток
   if (Number(this.value) == 19) {
-    smallTime(arrayValue, 86400001 * 7)
+    smallTime(arrayValue, 86400001 * 7);
   }
   // выборка по времини и сортировка от Меньше за 8-суток
   if (Number(this.value) == 21) {
-    smallTime(arrayValue, 86400000 * 8)
+    smallTime(arrayValue, 86400000 * 8);
   }
   // выборка по времини и сортировка от Меньше за 9-суток
   if (Number(this.value) == 23) {
-    smallTime(arrayValue, 86400000 * 9)
+    smallTime(arrayValue, 86400000 * 9);
   }
   // выборка по времини и сортировка от Меньше за 10-суток
   if (Number(this.value) == 25) {
-    smallTime(arrayValue, 86400000 * 10)
+    smallTime(arrayValue, 86400000 * 10);
   }
   function smallTime(arrayValue, time) {
     const miliseconds = Date.now();
     let newArray = [];
 
-    arrayValue.forEach(item => {
+    arrayValue.forEach((item) => {
       if (miliseconds - item.miliseconds < time) {
         newArray.push(item);
       }
@@ -1191,7 +1202,7 @@ sortValue.addEventListener("change", function () {
     newArray.sort(function (a, b) {
       return b.value - a.value;
     });
-    newArray.forEach(item => {
+    newArray.forEach((item) => {
       // рендерит етот обект в попап
       renderValuePopup(item);
     });
@@ -1205,7 +1216,7 @@ sortValue.addEventListener("change", function () {
   if (Number(this.value) == 26) {
     document.querySelector('.popupDey__sort_js').classList.add('_twoSort');
     openSortPopup(arrayValue, 26);
-    document.querySelector('.popupDey__sortC_js').style.display = "block";
+    document.querySelector('.popupDey__sortC_js').style.display = 'block';
     document.querySelector('.popupDey__sortM_js').style.display = 'block';
   }
   //сортировка Среднее за месяц.
@@ -1224,11 +1235,11 @@ function openSortPopup(arrayValue, sortValueChange) {
   // все года
   const years = [];
   // выбераем года
-  arrayValue.forEach(item => {
+  arrayValue.forEach((item) => {
     // если в массиве years нету етого значения то возвращает false если есть то true
     let i = years.includes(item.year);
     if (!i) {
-      years.push(item.year)
+      years.push(item.year);
     }
   });
   // сортируем от большого к меншому
@@ -1241,14 +1252,14 @@ function openSortPopup(arrayValue, sortValueChange) {
   f1();
   function f1() {
     let year = years[indexYears];
-    //месеа 
+    //месеа
     const months = [];
     // выбераем месяца в текущем годе
-    arrayValue.forEach(item => {
+    arrayValue.forEach((item) => {
       if (item.year == year) {
         let i = months.includes(item.month);
         if (!i) {
-          months.push(item.month)
+          months.push(item.month);
         }
       }
     });
@@ -1265,16 +1276,20 @@ function openSortPopup(arrayValue, sortValueChange) {
       f3();
       function f3() {
         let arrayDey = [];
-        arrayValue.forEach(item => {
-          if (item.numberDeta == indexDey && item.month == months[indexMonths] && item.year == year) {
+        arrayValue.forEach((item) => {
+          if (
+            item.numberDeta == indexDey &&
+            item.month == months[indexMonths] &&
+            item.year == year
+          ) {
             arrayDey.push(item);
           }
         });
 
         if (arrayDey.length > 0) {
-          if (sortValueChange === 26){
+          if (sortValueChange === 26) {
             renderTable3(indexDey, months[indexMonths], year, indexTable, arrayDey);
-          }else{
+          } else {
             if (!popupReverse.classList.contains('_reverse')) {
               renderTable(indexDey, months[indexMonths], year, indexTable, arrayDey);
             } else {
@@ -1294,11 +1309,10 @@ function openSortPopup(arrayValue, sortValueChange) {
         f2();
       }
     }
-    indexYears++
+    indexYears++;
     if (years[indexYears]) {
       f1();
     }
-
   }
   setTimeout(() => {
     arrowAddRemove2();
@@ -1313,11 +1327,11 @@ function openSortPopup2(arrayValue, sortValueChange) {
   // все года
   const years = [];
   // выбераем года
-  arrayValue.forEach(item => {
+  arrayValue.forEach((item) => {
     // если в массиве years нету етого значения то возвращает false если есть то true
     let i = years.includes(item.year);
     if (!i) {
-      years.push(item.year)
+      years.push(item.year);
     }
   });
   // сортируем от большого к меншому
@@ -1330,14 +1344,14 @@ function openSortPopup2(arrayValue, sortValueChange) {
   f1();
   function f1() {
     let year = years[indexYears];
-    //месеа 
+    //месеа
     const months = [];
     // выбераем месяца в текущем годе
-    arrayValue.forEach(item => {
+    arrayValue.forEach((item) => {
       if (item.year == year) {
         let i = months.includes(item.month);
         if (!i) {
-          months.push(item.month)
+          months.push(item.month);
         }
       }
     });
@@ -1350,7 +1364,7 @@ function openSortPopup2(arrayValue, sortValueChange) {
     f2();
     function f2() {
       let arrayMonth = [];
-      arrayValue.forEach(item => {
+      arrayValue.forEach((item) => {
         if (item.month == months[indexMonths] && item.year == year) {
           arrayMonth.push(item);
         }
@@ -1366,17 +1380,15 @@ function openSortPopup2(arrayValue, sortValueChange) {
         f2();
       }
     }
-    indexYears++
+    indexYears++;
     if (years[indexYears]) {
       f1();
     }
-
   }
   setTimeout(() => {
     arrowAddRemove2();
   }, 200);
 }
-
 
 function newValuePopup() {
   let arrayValue = getLocalStorage(oneInputValue, false);
@@ -1386,7 +1398,7 @@ function newValuePopup() {
   });
   popupTable.innerHTML = '';
 
-  arrayValue.forEach(item => {
+  arrayValue.forEach((item) => {
     // рендерит етот обект в попап
     renderValuePopup(item);
   });
@@ -1395,7 +1407,20 @@ function newValuePopup() {
 function renderTable(day, month, year, counterTableId, arrayDey) {
   let idTable = `table${counterTableId}`;
 
-  const months = ['січеня', 'лютого', 'березня', 'квітня', 'травня', 'червня', 'липня', 'серпня', 'вересня', 'жовтня', 'листопада', 'грудня'];
+  const months = [
+    'січеня',
+    'лютого',
+    'березня',
+    'квітня',
+    'травня',
+    'червня',
+    'липня',
+    'серпня',
+    'вересня',
+    'жовтня',
+    'листопада',
+    'грудня',
+  ];
 
   const htmlTable = `
       <div class="popupDeyTable _table${day}-${month - 1}-${year}">
@@ -1433,16 +1458,31 @@ function renderTable3(day, month, year, counterTableId, arrayDey) {
   });
   valueSmall = arrayDey[0];
   // --------------------
-  arrayDey.forEach(item => {
+  arrayDey.forEach((item) => {
     valueSum = Number(valueSum) + Number(item.value);
   });
 
   valueAverage = valueSum / arrayDey.length;
 
-  const months = ['січеня', 'лютого', 'березня', 'квітня', 'травня', 'червня', 'липня', 'серпня', 'вересня', 'жовтня', 'листопада', 'грудня'];
+  const months = [
+    'січеня',
+    'лютого',
+    'березня',
+    'квітня',
+    'травня',
+    'червня',
+    'липня',
+    'серпня',
+    'вересня',
+    'жовтня',
+    'листопада',
+    'грудня',
+  ];
 
   const htmlTable = `
-      <div class="popupDeyTable popupDeyTable_js _table${day}-${month - 1}-${year}" data-big="${itemBig.value}" data-small="${valueSmall.value}" data-average="${valueAverage.toFixed(3)}">
+      <div class="popupDeyTable popupDeyTable_js _table${day}-${month - 1}-${year}" data-big="${
+    itemBig.value
+  }" data-small="${valueSmall.value}" data-average="${valueAverage.toFixed(3)}">
         <div class="flex-block tebleTitle">
           <p>${day} ${months[month - 1]} ${year}</p>
           <p>
@@ -1477,15 +1517,30 @@ function renderTable4(month, year, counterTableId, arrayMonth) {
   });
   valueSmall = arrayMonth[0];
   // --------------------
-  arrayMonth.forEach(item => {
+  arrayMonth.forEach((item) => {
     valueSum = Number(valueSum) + Number(item.value);
   });
   valueAverage = valueSum / arrayMonth.length;
 
-  const months = ['Січень', 'Лютий', 'Березень', 'Квітень', 'Травень', 'Червень', 'Липень', 'Серпень', 'Вересень', 'Жовтень', 'Листопад', 'Грудень'];
+  const months = [
+    'Січень',
+    'Лютий',
+    'Березень',
+    'Квітень',
+    'Травень',
+    'Червень',
+    'Липень',
+    'Серпень',
+    'Вересень',
+    'Жовтень',
+    'Листопад',
+    'Грудень',
+  ];
 
   const htmlTable = `
-      <div class="popupDeyTable popupDeyTable_js _table${month - 1}-${year}" data-big="${itemBig.value}" data-small="${valueSmall.value}" data-average="${valueAverage.toFixed(3)}">
+      <div class="popupDeyTable popupDeyTable_js _table${month - 1}-${year}" data-big="${
+    itemBig.value
+  }" data-small="${valueSmall.value}" data-average="${valueAverage.toFixed(3)}">
         <div class="flex-block tebleTitle">
           <p>${months[month - 1]} ${year}</p>
           <p>
@@ -1531,11 +1586,11 @@ function renderhourse3(itemBig, valueAverage, valueSmall, idTable) {
 // рендерит сортировку Средние по часам в таблицы.
 function renderhourse4(itemBig, valueAverage, valueSmall, idTable) {
   let month1 = itemBig.month;
-  if (month1 < 10){
+  if (month1 < 10) {
     month1 = `0${itemBig.month}`;
   }
   let month2 = valueSmall.month;
-  if (month2 < 10){
+  if (month2 < 10) {
     month2 = `0${valueSmall.month}`;
   }
   let valueHtml = `
@@ -1553,7 +1608,9 @@ function renderhourse4(itemBig, valueAverage, valueSmall, idTable) {
       </tr>
      <tr class="popup__table-tr_js td__value-valueSmall">
         <td class="td__value">мiнiм.з</td>
-        <td class="td__value">${valueSmall.numberDeta}.${month2}. (${valueSmall.date.split(',')[1]})</td>
+        <td class="td__value">${valueSmall.numberDeta}.${month2}. (${
+    valueSmall.date.split(',')[1]
+  })</td>
         <td class="td__value ${itemBig.background2}">${valueSmall.value1}</td>
         <td class="td__value ${itemBig.background}">${valueSmall.value}</td>
       </tr>
@@ -1568,7 +1625,7 @@ function renderDeyFunc(arrayValueDey, idTable) {
     let newArray = [];
     let value = 0;
 
-    arrayValueDey.forEach(item => {
+    arrayValueDey.forEach((item) => {
       if (item.hourse == counter) {
         newArray.push(item.value);
       }
@@ -1612,17 +1669,17 @@ function renderhourse(time, value, number, idTable) {
 // сортировка Средние по часам начиная з большого
 function sortPopupDeyTable() {
   const sortPopupDeyTable = document.querySelectorAll('.sortPopupDeyTable_js');
-  sortPopupDeyTable.forEach(itemDey => {
+  sortPopupDeyTable.forEach((itemDey) => {
     let childTr = itemDey.querySelectorAll('.popup__table-tr_js');
 
     let tableTrAll = [];
 
-    childTr.forEach(item => {
+    childTr.forEach((item) => {
       itemObgect = {
         value: item.dataset.valuetime,
-        element: item
-      }
-      tableTrAll.push(itemObgect)
+        element: item,
+      };
+      tableTrAll.push(itemObgect);
     });
 
     tableTrAll.sort(function (a, b) {
@@ -1630,7 +1687,7 @@ function sortPopupDeyTable() {
     });
 
     itemDey.innerHTML = '';
-    tableTrAll.forEach(item => {
+    tableTrAll.forEach((item) => {
       let element = item.element;
       itemDey.prepend(element);
     });
@@ -1640,8 +1697,21 @@ function sortPopupDeyTable() {
 // рендерит таблицы в попап popupRenderDey
 function renderTable2(day, month, year, counterTableId, arrayDey) {
   let idTable = `table${counterTableId}`;
-  
-  const months = ['січеня', 'лютого', 'березня', 'квітня', 'травня', 'червня', 'липня', 'серпня', 'вересня', 'жовтня', 'листопада', 'грудня'];
+
+  const months = [
+    'січеня',
+    'лютого',
+    'березня',
+    'квітня',
+    'травня',
+    'червня',
+    'липня',
+    'серпня',
+    'вересня',
+    'жовтня',
+    'листопада',
+    'грудня',
+  ];
 
   const htmlTable = `
     <div class="popupDeyTable font__smail _table${day}-${month - 1}-${year}">
@@ -1663,46 +1733,46 @@ function renderDeyFunc2(arrayValueDey, idTable) {
   for (let counter = 0; counter < 24; counter++) {
     let newArray = [];
 
-    arrayValueDey.forEach(item => {
+    arrayValueDey.forEach((item) => {
       if (item.hourse == counter) {
         newArray.push(item);
       }
     });
-    
-    if(newArray.length){
+
+    if (newArray.length) {
       const tableInner1 = document.querySelector(`.table__inner1-${idTable}_js`);
       const tableInner2 = document.querySelector(`.table__inner2-${idTable}_js`);
-      let bg1 = "";
-      let bg2 = "";
+      let bg1 = '';
+      let bg2 = '';
 
-      const table1 = document.createElement("div");
-      table1.className = "table";
-      const tableClock1 = document.createElement("div");
+      const table1 = document.createElement('div');
+      table1.className = 'table';
+      const tableClock1 = document.createElement('div');
       tableClock1.className = 'table__clock';
       tableClock1.innerHTML = counter;
       table1.insertAdjacentElement('afterbegin', tableClock1);
-      const tableValue1 = document.createElement("div");
-      tableValue1.className = "table__value";
+      const tableValue1 = document.createElement('div');
+      tableValue1.className = 'table__value';
 
-      const table2 = document.createElement("div");
-      table2.className = "table";
-      const tableClock2 = document.createElement("div");
+      const table2 = document.createElement('div');
+      table2.className = 'table';
+      const tableClock2 = document.createElement('div');
       tableClock2.className = 'table__clock';
       tableClock2.innerHTML = counter;
       table2.insertAdjacentElement('afterbegin', tableClock2);
-      const tableValue2 = document.createElement("div");
-      tableValue2.className = "table__value";
+      const tableValue2 = document.createElement('div');
+      tableValue2.className = 'table__value';
 
-      newArray.forEach(item =>{
-        if (item.background == "background__acent-2"){
+      newArray.forEach((item) => {
+        if (item.background == 'background__acent-2') {
           bg1 = 'background__acent-1';
           bg2 = 'background__acent-2';
-        }else{
+        } else {
           bg1 = 'background__acent-2';
           bg2 = 'background__acent-1';
         }
-        if(!item.Minutes){
-          item.Minutes = "--";
+        if (!item.Minutes) {
+          item.Minutes = '--';
         }
         const ul1 = `
         <ul class="table__value-list" data-clock="${counter}">
@@ -1726,10 +1796,10 @@ function renderDeyFunc2(arrayValueDey, idTable) {
 
       table1.insertAdjacentElement('beforeEnd', tableValue1);
       table2.insertAdjacentElement('beforeEnd', tableValue2);
-      
+
       tableInner1.insertAdjacentElement('beforeend', table1);
       tableInner2.insertAdjacentElement('beforeend', table2);
-    }else{
+    } else {
       const tableInner1 = document.querySelector(`.table__inner1-${idTable}_js`);
       const tableInner2 = document.querySelector(`.table__inner2-${idTable}_js`);
       let valueHtml1 = `
@@ -1769,21 +1839,21 @@ function renderDeyFunc2(arrayValueDey, idTable) {
 // сортировка Средние по часам начиная з меншого
 function sortPopupDeyTable2() {
   let tableSort = document.querySelectorAll('.table__sort_js');
-  tableSort.forEach(childTr => {
+  tableSort.forEach((childTr) => {
     // собырае все ul с колонки
     const table = childTr.querySelectorAll('.table__value-list');
     let tableTrAll = [];
 
     // из каждого ul (листа) делаем обект з даннымы
-    table.forEach(item => {
-      const tableDataAll = item.querySelectorAll("[data-valuetime]");
-      tableDataAll.forEach(itemData => {
+    table.forEach((item) => {
+      const tableDataAll = item.querySelectorAll('[data-valuetime]');
+      tableDataAll.forEach((itemData) => {
         itemObgect = {
           value: itemData.dataset.valuetime,
           element: item,
-          clock: item.dataset.clock
-        }
-        tableTrAll.push(itemObgect)
+          clock: item.dataset.clock,
+        };
+        tableTrAll.push(itemObgect);
       });
     });
 
@@ -1796,10 +1866,10 @@ function sortPopupDeyTable2() {
     // ---------------------------------
     fs1();
     function fs1() {
-      // создаем елемент таблицы table 
-      const table = document.createElement("div");
-      table.className = "table";
-      const tableClock = document.createElement("div");
+      // создаем елемент таблицы table
+      const table = document.createElement('div');
+      table.className = 'table';
+      const tableClock = document.createElement('div');
       tableClock.className = 'table__clock';
       tableClock.innerHTML = tableTrAll[0].clock;
       table.insertAdjacentElement('afterbegin', tableClock);
@@ -1807,8 +1877,8 @@ function sortPopupDeyTable2() {
       fs2();
       function fs2() {
         // создаем table__value(обертка для ul)
-        const tableValue = document.createElement("div");
-        tableValue.className = "table__value";
+        const tableValue = document.createElement('div');
+        tableValue.className = 'table__value';
 
         fs3();
         function fs3() {
@@ -1816,7 +1886,7 @@ function sortPopupDeyTable2() {
           tableValue.insertAdjacentElement('beforeEnd', tableTrAll[0].element);
           let clock = tableTrAll[0].clock;
           tableTrAll.splice(0, 1);
-  
+
           if (tableTrAll.length) {
             fs4();
           } else {
@@ -1838,10 +1908,10 @@ function sortPopupDeyTable2() {
               // -----------------------------------------------------------------------------------------
               // берем значения из масива tableTrAll по индексу [0]
               let ulValue = tableTrAll[0].value;
-              
-              for (let i = 1; i < tableTrAll.length; i++){
-                // если в масиве tableTrAll есть ещо значения равны 
-                if (tableTrAll[i].value == ulValue && tableTrAll[i].clock == clock){
+
+              for (let i = 1; i < tableTrAll.length; i++) {
+                // если в масиве tableTrAll есть ещо значения равны
+                if (tableTrAll[i].value == ulValue && tableTrAll[i].clock == clock) {
                   tableValue.insertAdjacentElement('beforeEnd', tableTrAll[i].element);
                   tableTrAll.splice(i, 1);
                 }
@@ -1861,13 +1931,12 @@ function sortPopupDeyTable2() {
   });
 }
 
-
 // <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
 const calendarMonthInner = document.querySelectorAll('.calendar__month-inner_js');
 const fon2 = document.querySelector('.fon2_js');
 
 calendarPopap.addEventListener('click', (e) => {
-  if (e.target.closest('.calendar-popup__close_js')){
+  if (e.target.closest('.calendar-popup__close_js')) {
     calendarPopap.classList.remove('_active');
   }
   if (e.target.closest('.fon2_js')) {
@@ -1877,20 +1946,21 @@ calendarPopap.addEventListener('click', (e) => {
       item.classList.remove('_active');
       item.classList.remove('_selection');
       item.style.cssText = '';
-    })
+    });
   }
-  
+
   if (e.target.closest('.calendar__month-inner_js')) {
     const calendarMonthInner = e.target.closest('.calendar__month-inner_js');
     const calendarMonthWrapper = e.target.closest('.calendar__month-wrapper_js');
 
     // ------------------------------------------
-    if (e.target.closest('.calendar__dey_js ')
-        && e.target.classList.contains('_active')
-        && calendarMonthInner.classList.contains('_active')) {
-
+    if (
+      e.target.closest('.calendar__dey_js ') &&
+      e.target.classList.contains('_active') &&
+      calendarMonthInner.classList.contains('_active')
+    ) {
       const calendarPopap = document.querySelector('.calendar-popap_js');
-      calendarPopap.classList.remove('_active');//скрывает календарь
+      calendarPopap.classList.remove('_active'); //скрывает календарь
       calendarBtn.innerHTML = e.target.dataset.dey;
       const popupReverse = document.querySelector('.popup__reverse_js');
 
@@ -1900,12 +1970,11 @@ calendarPopap.addEventListener('click', (e) => {
         scrollDey2(e.target.dataset.deydata);
       }
     }
-    calendarMonthInner.classList.toggle('_active');//маштабирует месяц
-    calendarMonthInner.classList.toggle('_selection');// дозволяет запрещает hover на днях
-    fon2.classList.toggle('_active');//скрывает показует фон
+    calendarMonthInner.classList.toggle('_active'); //маштабирует месяц
+    calendarMonthInner.classList.toggle('_selection'); // дозволяет запрещает hover на днях
+    fon2.classList.toggle('_active'); //скрывает показует фон
     // ------------------------------------------
-    
-    
+
     if (calendarPopap.offsetWidth < 600) {
       const MonthWrapperWidth = calendarMonthWrapper.offsetWidth;
       const windowInnerHeight = window.innerHeight;
@@ -1922,10 +1991,10 @@ calendarPopap.addEventListener('click', (e) => {
         scale = 3;
       }
 
-      if (calendarMonthInner.classList.contains("_active")) {
+      if (calendarMonthInner.classList.contains('_active')) {
         const MonthInnerTop = calendarMonthInner.getBoundingClientRect().top;
-        let ttX = (MonthWrapperWidth / 2) - (MonthInnerWidth / 2) - MonthInnerLeft;
-        let ttY = (windowInnerHeight / 2) - (MonthInnerHeight / 2) - MonthInnerTop;
+        let ttX = MonthWrapperWidth / 2 - MonthInnerWidth / 2 - MonthInnerLeft;
+        let ttY = windowInnerHeight / 2 - MonthInnerHeight / 2 - MonthInnerTop;
 
         calendarMonthInner.style.cssText = `transform: scale(${scale})
                                         translate(${ttX / scale}px, ${ttY / scale}px);`;
@@ -1936,9 +2005,9 @@ calendarPopap.addEventListener('click', (e) => {
   }
 });
 
-function scrollDey1(data){
+function scrollDey1(data) {
   const scrolElement = document.querySelector(`._table${data}`);
-  if (scrolElement){
+  if (scrolElement) {
     scrolling(scrolElement.offsetTop - 73);
   }
 }
@@ -1955,34 +2024,47 @@ function scrollDey2(data) {
     }, 6000);
     scrolling(scrolElement.offsetTop);
   }
-
 }
-function scrollDey3(data){
+function scrollDey3(data) {
   let data1 = data.split('-');
   let data2 = `${data1[1]}-${data1[2]}`;
   const scrolElement = document.querySelector(`._table${data2}`);
-  if (scrolElement){
+  if (scrolElement) {
     scrolling(scrolElement.offsetTop - 73);
     console.log('scrolling()');
   }
 }
 
-
 function scrolling(top) {
-  const popupTop = document.querySelector(".popup_js");
-  const popupDeyTop = document.querySelector(".popupDey_js");
+  const popupTop = document.querySelector('.popup_js');
+  const popupDeyTop = document.querySelector('.popupDey_js');
   if (popupTop.classList.contains('_active')) {
     popupTop.scroll({
       top: top,
       left: 0,
-      behavior: 'smooth'
+      behavior: 'smooth',
     });
   }
   if (popupDeyTop.classList.contains('_active')) {
     popupDeyTop.scroll({
       top: top,
       left: 0,
-      behavior: 'smooth'
+      behavior: 'smooth',
     });
   }
+}
+
+function GetLocalStorageInPopup() {
+  const popupLocalStorageGet = document.querySelector('.popup-LocalStorage_get_js');
+  popupLocalStorageGet.classList.add('active');
+  const LocalStorageValueAll = getLocalStorage('fgh-oneInputValue');
+  const popupLocalStorageContent = popupLocalStorageGet.querySelector(
+    '.popup-LocalStorage_get-content_js',
+  );
+  popupLocalStorageContent.innerHTML = JSON.stringify(LocalStorageValueAll);
+}
+
+function closePopupLocalStorageGet() {
+  const popupLocalStorageGet = document.querySelector('.popup-LocalStorage_get_js');
+  popupLocalStorageGet.classList.remove('active');
 }
