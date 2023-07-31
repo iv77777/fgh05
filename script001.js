@@ -2061,6 +2061,7 @@ function GetLocalStorageInPopup() {
   const popupLocalStorageContent = popupLocalStorageGet.querySelector(
     '.popup-LocalStorage_get-content_js',
   );
+  popupLocalStorageContent.classList.remove('copy');
   popupLocalStorageContent.innerHTML = JSON.stringify(LocalStorageValueAll);
 }
 
@@ -2075,6 +2076,7 @@ function PopupLocalStorageCopн() {
   const popupLocalStorageContent = popupLocalStorageGet.querySelector(
     '.popup-LocalStorage_get-content_js',
   );
+  popupLocalStorageContent.classList.add('copy');
 
   //поместити в буфер обмена
   navigator.clipboard

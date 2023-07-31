@@ -832,6 +832,10 @@ body {
   background-color: #fff;
   overflow-wrap: break-word;
 }
+.popup-LocalStorage_get-content.copy{
+  background-color: #9ebfec;
+
+}
 .active .popup-LocalStorage_get-content {
   -moz-user-select: all;
   -webkit-user-select: all;
