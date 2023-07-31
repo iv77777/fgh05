@@ -338,9 +338,30 @@ function addActiveDeyCalendar(obgectDey) {
     }
   }, 1);
 }
+function removeClassAllTimeout(className, timeout) {
+  const allClass = document.querySelectorAll(className);
+  setTimeout(() => {
+    allClass.forEach((element) => {
+      element.classList.remove('_teblepopup-active');
+    });
+  }, timeout);
+}
 
-function addRenderValuePopup(arrayValue, indexStart = 0, indexAnd = 10) {
+let quantityRenderValue = 100;
+function addRenderValuePopup(arrayValue, indexStart = 0, indexAnd = quantityRenderValue) {
+  arrayValue.reverse();
   popupTableLengthAll.innerHTML = arrayValue.length;
+  if (arrayValue.length >= indexAnd * 2) {
+    popupTableAddBtn.innerHTML = '+' + indexAnd;
+    popupTableLength.innerHTML = indexAnd;
+  } else {
+    if (arrayValue.length > indexAnd) {
+      popupTableAddBtn.innerHTML = '+' + (arrayValue.length - indexAnd);
+    } else {
+      popupTableAddBtn.innerHTML = '+' + 0;
+      popupTableLength.innerHTML = arrayValue.length;
+    }
+  }
   for (let index = indexStart; index < arrayValue.length; index++) {
     if (index === indexAnd) {
       break;
@@ -348,8 +369,18 @@ function addRenderValuePopup(arrayValue, indexStart = 0, indexAnd = 10) {
     // рендерит етот обект в попап
     renderValuePopup(arrayValue[index]);
   }
+  removeClassAllTimeout('._teblepopup-active', 1000);
 }
-// рендерит переданный обект в начало попапа
+
+popupTableAddBtn.addEventListener('click', () => {
+  // popupTableAddBtn.innerHTML = '+' + 100;
+  const arrayValue = getLocalStorage(oneInputValue, false);
+  const startIndex = Number(popupTableLength.innerHTML);
+  popupTableLength.innerHTML = startIndex + quantityRenderValue;
+  addRenderValuePopup(arrayValue, startIndex, startIndex + quantityRenderValue);
+});
+
+// рендерит переданный обект в кінець попапа
 function renderValuePopup(arrayValue) {
   if (!arrayValue.value1) {
     arrayValue.value1 = '';
@@ -368,7 +399,6 @@ function renderValuePopup(arrayValue) {
   `;
   // popupTable.insertAdjacentHTML('afterbegin', valueHtml);
   popupTable.insertAdjacentHTML('beforeend', valueHtml);
-  removeAllClass('._teblepopup-active', 1500);
 }
 // иметирует польот значения до иконки
 function addValue(resultValue, backgroundColor) {
@@ -2083,22 +2113,4 @@ function PopupLocalStorageCopн() {
     .catch((err) => {
       console.log(err);
     });
-}
-
-popupTableAddBtn.addEventListener('click', () => {
-  const arrayValue = getLocalStorage(oneInputValue, false);
-  const startIndex = Number(popupTableLength.innerHTML);
-  popupTableLength.innerHTML = startIndex + 10;
-  console.log(startIndex);
-  addRenderValuePopup(arrayValue, startIndex, startIndex + 10);
-  removeAllClass('._teblepopup-active', 1000);
-});
-
-function removeAllClass(className, timeout) {
-  const allClass = document.querySelectorAll(className);
-  setTimeout(() => {
-    allClass.forEach((element) => {
-      element.classList.remove('_teblepopup-active');
-    });
-  }, timeout);
 }
