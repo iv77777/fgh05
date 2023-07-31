@@ -2068,3 +2068,21 @@ function closePopupLocalStorageGet() {
   const popupLocalStorageGet = document.querySelector('.popup-LocalStorage_get_js');
   popupLocalStorageGet.classList.remove('active');
 }
+
+function PopupLocalStorageCopн() {
+  const popupLocalStorageGet = document.querySelector('.popup-LocalStorage_get_js');
+  const LocalStorageValueAll = getLocalStorage('fgh-oneInputValue');
+  const popupLocalStorageContent = popupLocalStorageGet.querySelector(
+    '.popup-LocalStorage_get-content_js',
+  );
+
+  //поместити в буфер обмена
+  navigator.clipboard
+    .writeText(JSON.stringify(LocalStorageValueAll))
+    .then(() => {
+      console.log('ok');
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+}

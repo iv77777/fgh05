@@ -812,7 +812,7 @@ body {
 
 .popup-LocalStorage_get {
   display: none;
-  padding-top: 70px;
+  padding-top: 20px;
   position: fixed;
   width: 100%;
   height: 100%;
@@ -821,15 +821,9 @@ body {
   background-color: #faf9f9;
   color: #000;
   font-size: 15px;
-
 }
 .popup-LocalStorage_get.active {
   display: block;
-  
-  -moz-user-select: all;
-  -webkit-user-select: all;
-  -ms-user-select: all;
-  user-select: all;
 }
 .popup-LocalStorage_get-content {
   overflow: auto;
@@ -838,10 +832,27 @@ body {
   background-color: #fff;
   overflow-wrap: break-word;
 }
+.active .popup-LocalStorage_get-content {
+  -moz-user-select: all;
+  -webkit-user-select: all;
+  -ms-user-select: all;
+  user-select: all;
+}
 .popup-LocalStorage_get-loader {
   width: 100%;
   height: 100%;
   display: flex;
   align-items: center;
   justify-content: center;
+}
+
+.popup-LocalStorage_btn-copy {
+  background-color: #8bc34a;
+  color: #fff;
+  padding: 7px;
+  border-radius: 5px;
+  margin: 20px;
+}
+.popup-LocalStorage_btn-copy:active {
+  background-color: #608535;
 }
