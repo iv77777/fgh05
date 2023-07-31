@@ -20,6 +20,18 @@
 .background__acent-2._active-color {
   background-color: var(--background-1);
 }
+._teblepopup-active .background__acent-1 {
+  background-color: #50d750;
+}
+._teblepopup-active .background__acent-1._active-color {
+  background-color: #50d750;
+}
+._teblepopup-active .background__acent-2 {
+  background-color: #50d750;
+}
+._teblepopup-active .background__acent-2._active-color {
+  background-color: #50d750;
+}
 .background__acent-3 {
   background-color: var(--background-3);
 }
@@ -201,6 +213,7 @@ body {
 }
 .popup__table-wrapper {
   display: flex;
+  flex-direction: column;
 }
 .popup__top {
   position: sticky;
@@ -832,9 +845,8 @@ body {
   background-color: #fff;
   overflow-wrap: break-word;
 }
-.popup-LocalStorage_get-content.copy{
+.popup-LocalStorage_get-content.copy {
   background-color: #9ebfec;
-
 }
 .active .popup-LocalStorage_get-content {
   -moz-user-select: all;
@@ -859,4 +871,19 @@ body {
 }
 .popup-LocalStorage_btn-copy:active {
   background-color: #608535;
+}
+.popup__table-add {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 20px 10px 10px;
+}
+.popup__table-add-btn {
+  margin-left: 20px;
+  border: 1px solid #000;
+  border-radius: 5px;
+  padding: 5px 10px;
+}
+._teblepopup-active {
+  background-color: #50d750;
 }

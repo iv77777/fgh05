@@ -33,6 +33,10 @@ const popupDeySortBtn = document.querySelectorAll('.popupDey__sort-btn_js');
 
 const fon = document.querySelector('.fon_js');
 
+const popupTableLength = document.querySelector('.popup__table-length_js');
+const popupTableLengthAll = document.querySelector('.popup__table-length-all_js');
+const popupTableAddBtn = document.querySelector('.popup__table-add-btn_js');
+
 // Польот значений
 const audioFly = new Audio('mp3/flight.mp3');
 audioFly.currentTime = 0;
@@ -334,6 +338,17 @@ function addActiveDeyCalendar(obgectDey) {
     }
   }, 1);
 }
+
+function addRenderValuePopup(arrayValue, indexStart = 0, indexAnd = 10) {
+  popupTableLengthAll.innerHTML = arrayValue.length;
+  for (let index = indexStart; index < arrayValue.length; index++) {
+    if (index === indexAnd) {
+      break;
+    }
+    // рендерит етот обект в попап
+    renderValuePopup(arrayValue[index]);
+  }
+}
 // рендерит переданный обект в начало попапа
 function renderValuePopup(arrayValue) {
   if (!arrayValue.value1) {
@@ -343,15 +358,17 @@ function renderValuePopup(arrayValue) {
   addActiveDeyCalendar(arrayValue);
 
   let valueHtml = `
-     <tr class="popup__table-tr_js _teblepopup${arrayValue.numberDeta}-${arrayValue.month - 1}-${
-    arrayValue.year
-  }" id="${arrayValue.miliseconds}">
+     <tr class="popup__table-tr_js _teblepopup _teblepopup-active ${arrayValue.numberDeta}-${
+    arrayValue.month - 1
+  }-${arrayValue.year}" id="${arrayValue.miliseconds}">
         <td class="td__date">${arrayValue.date}</td>
         <td class="${arrayValue.background2} td__value">${arrayValue.value1}</td>
         <td class="${arrayValue.background} td__value">${arrayValue.value}</td>
       </tr>
   `;
-  popupTable.insertAdjacentHTML('afterbegin', valueHtml);
+  // popupTable.insertAdjacentHTML('afterbegin', valueHtml);
+  popupTable.insertAdjacentHTML('beforeend', valueHtml);
+  removeAllClass('._teblepopup-active', 1500);
 }
 // иметирует польот значения до иконки
 function addValue(resultValue, backgroundColor) {
@@ -689,10 +706,7 @@ document.addEventListener('click', (e) => {
     });
     popupTable.innerHTML = '';
 
-    arrayValue.forEach((item) => {
-      // рендерит етот обект в попап
-      renderValuePopup(item);
-    });
+    addRenderValuePopup(arrayValue);
 
     setTimeout(() => {
       arrowAddRemove1();
@@ -1056,10 +1070,7 @@ sortValue.addEventListener('change', function () {
     arrayValue.sort(function (a, b) {
       return a.value - b.value;
     });
-    arrayValue.forEach((item) => {
-      // рендерит етот обект в попап
-      renderValuePopup(item);
-    });
+    addRenderValuePopup(arrayValue);
   }
 
   // сортировка По значению менше
@@ -1069,10 +1080,7 @@ sortValue.addEventListener('change', function () {
       return b.value - a.value;
     });
 
-    arrayValue.forEach((item) => {
-      // рендерит етот обект в попап
-      renderValuePopup(item);
-    });
+    addRenderValuePopup(arrayValue);
   }
 
   // сортировка самые старые
@@ -1081,10 +1089,7 @@ sortValue.addEventListener('change', function () {
     arrayValue.sort(function (a, b) {
       return b.miliseconds - a.miliseconds;
     });
-    arrayValue.forEach((item) => {
-      // рендерит етот обект в попап
-      renderValuePopup(item);
-    });
+    addRenderValuePopup(arrayValue);
   }
   // выборка по времини и сортировка от Больше. за 1-сутки
   if (Number(this.value) == 5) {
@@ -1142,10 +1147,7 @@ sortValue.addEventListener('change', function () {
     newArray.sort(function (a, b) {
       return a.value - b.value;
     });
-    newArray.forEach((item) => {
-      // рендерит етот обект в попап
-      renderValuePopup(item);
-    });
+    addRenderValuePopup(newArray);
   }
   // выборка по времини и сортировка от Меньше за 1-сутки
   if (Number(this.value) == 6) {
@@ -1202,10 +1204,7 @@ sortValue.addEventListener('change', function () {
     newArray.sort(function (a, b) {
       return b.value - a.value;
     });
-    newArray.forEach((item) => {
-      // рендерит етот обект в попап
-      renderValuePopup(item);
-    });
+    addRenderValuePopup(newArray);
   }
   // <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
   // сортировка Средние по часам.
@@ -1398,10 +1397,7 @@ function newValuePopup() {
   });
   popupTable.innerHTML = '';
 
-  arrayValue.forEach((item) => {
-    // рендерит етот обект в попап
-    renderValuePopup(item);
-  });
+  addRenderValuePopup(arrayValue);
 }
 // рендерит таблицы в попап popupRenderDey
 function renderTable(day, month, year, counterTableId, arrayDey) {
@@ -2087,4 +2083,22 @@ function PopupLocalStorageCopн() {
     .catch((err) => {
       console.log(err);
     });
+}
+
+popupTableAddBtn.addEventListener('click', () => {
+  const arrayValue = getLocalStorage(oneInputValue, false);
+  const startIndex = Number(popupTableLength.innerHTML);
+  popupTableLength.innerHTML = startIndex + 10;
+  console.log(startIndex);
+  addRenderValuePopup(arrayValue, startIndex, startIndex + 10);
+  removeAllClass('._teblepopup-active', 1000);
+});
+
+function removeAllClass(className, timeout) {
+  const allClass = document.querySelectorAll(className);
+  setTimeout(() => {
+    allClass.forEach((element) => {
+      element.classList.remove('_teblepopup-active');
+    });
+  }, timeout);
 }
