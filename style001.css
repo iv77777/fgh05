@@ -822,13 +822,14 @@ body {
   color: #000;
   font-size: 15px;
 
+}
+.popup-LocalStorage_get.active {
+  display: block;
+  
   -moz-user-select: all;
   -webkit-user-select: all;
   -ms-user-select: all;
   user-select: all;
-}
-.popup-LocalStorage_get.active {
-  display: block;
 }
 .popup-LocalStorage_get-content {
   overflow: auto;
