@@ -398,7 +398,6 @@ function addRenderValuePopup(arrayValue, indexStart = 0, indexAnd = quantityRend
 }
 
 popupTableAddBtn.addEventListener('click', () => {
-  // popupTableAddBtn.innerHTML = '+' + 100;
   const arrayValue = getLocalStorage(oneInputValue, false);
   const startIndex = Number(popupTableLength.innerHTML);
   addRenderValuePopup(arrayValue, startIndex, startIndex + quantityRenderValue);
@@ -1111,7 +1110,7 @@ popupDey.addEventListener('scroll', function (e) {
 sortValue.addEventListener('change', function () {
   let arrayValue = getLocalStorage(oneInputValue, false);
   valuesLength.innerText = arrayValue.length;
-
+  popupTableLength.innerHTML = 0;
   // сортировка самые новые
   if (Number(this.value) == 1) {
     newValuePopup();
