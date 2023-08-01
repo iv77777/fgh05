@@ -377,21 +377,20 @@ let quantityRenderValue = 100;
 function addRenderValuePopup(arrayValue, indexStart = 0, indexAnd = quantityRenderValue) {
   arrayValue.reverse();
   popupTableLengthAll.innerHTML = arrayValue.length;
-  if (arrayValue.length >= indexAnd * 2) {
-    popupTableAddBtn.innerHTML = '+' + indexAnd;
-    popupTableLength.innerHTML = indexAnd;
+  if (arrayValue.length >= indexAnd + quantityRenderValue) {
+    popupTableAddBtn.innerHTML = '+' + quantityRenderValue;
   } else {
     if (arrayValue.length > indexAnd) {
       popupTableAddBtn.innerHTML = '+' + (arrayValue.length - indexAnd);
     } else {
       popupTableAddBtn.innerHTML = '+' + 0;
-      popupTableLength.innerHTML = arrayValue.length;
     }
   }
   for (let index = indexStart; index < arrayValue.length; index++) {
-    if (index === indexAnd) {
+    if (index >= indexAnd) {
       break;
     }
+    popupTableLength.innerHTML = Number(popupTableLength.innerHTML) + 1;
     // рендерит етот обект в попап
     renderValuePopup(arrayValue[index]);
   }
@@ -402,7 +401,6 @@ popupTableAddBtn.addEventListener('click', () => {
   // popupTableAddBtn.innerHTML = '+' + 100;
   const arrayValue = getLocalStorage(oneInputValue, false);
   const startIndex = Number(popupTableLength.innerHTML);
-  popupTableLength.innerHTML = startIndex + quantityRenderValue;
   addRenderValuePopup(arrayValue, startIndex, startIndex + quantityRenderValue);
 });
 
@@ -750,7 +748,7 @@ document.addEventListener('click', (e) => {
   if (e.target.closest('.buttons-img')) {
     popup.classList.add('_active');
     fon.classList.add('_active');
-
+    popupTableLength.innerHTML = 0;
     // делает вибранным "самые новые"
     sortValue.options[0].selected = true;
 
