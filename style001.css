@@ -697,6 +697,14 @@ body {
   margin-bottom: 5px;
   font-size: 40px;
 }
+.calendar__year-btn {
+  color: #fff;
+  display: inline-block;
+  padding: 10px;
+}
+.calendar__year-btn.active {
+  color: #50d750;
+}
 .calendar__container {
   max-width: 600px;
   position: relative;

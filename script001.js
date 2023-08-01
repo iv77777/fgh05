@@ -37,6 +37,32 @@ const popupTableLength = document.querySelector('.popup__table-length_js');
 const popupTableLengthAll = document.querySelector('.popup__table-length-all_js');
 const popupTableAddBtn = document.querySelector('.popup__table-add-btn_js');
 
+const calendarYear2022 = document.querySelector('.calendar__year-2022_js');
+const calendarYear2023 = document.querySelector('.calendar__year-2023_js');
+
+calendarYear2022.addEventListener('click', () => {
+  calendarYear2022.classList.add('active');
+  calendarYear2023.classList.remove('active');
+  // создает календарь переданого года и рендерит в переданный html елемент
+  createCalendar(2022, calendarMonthWrapper);
+
+  let arrayValue = getLocalStorage(oneInputValue, false);
+  arrayValue.forEach((element) => {
+    addActiveDeyCalendar(element);
+  });
+});
+calendarYear2023.addEventListener('click', () => {
+  calendarYear2023.classList.add('active');
+  calendarYear2022.classList.remove('active');
+  // создает календарь переданого года и рендерит в переданный html елемент
+  createCalendar(2023, calendarMonthWrapper);
+
+  let arrayValue = getLocalStorage(oneInputValue, false);
+  arrayValue.forEach((element) => {
+    addActiveDeyCalendar(element);
+  });
+});
+
 // Польот значений
 const audioFly = new Audio('mp3/flight.mp3');
 audioFly.currentTime = 0;
