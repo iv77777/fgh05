@@ -373,7 +373,7 @@ function removeClassAllTimeout(className, timeout) {
   }, timeout);
 }
 
-let quantityRenderValue = 100;
+let quantityRenderValue = 200;
 function addRenderValuePopup(arrayValue, indexStart = 0, indexAnd = quantityRenderValue) {
   arrayValue.reverse();
   popupTableLengthAll.innerHTML = arrayValue.length;
