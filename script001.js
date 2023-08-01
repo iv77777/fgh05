@@ -51,7 +51,7 @@ const inputValue = 'fgh-inputValue';
 const oneInputValue = 'fgh-oneInputValue';
 
 // создает календарь переданого года и рендерит в переданный html елемент
-createCalendar(2022, calendarMonthWrapper);
+createCalendar(2023, calendarMonthWrapper);
 
 // <<<<<<<<<<<<<<<< function >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 // создает календарь переданого года и рендерит в переданный html елемент
@@ -111,7 +111,7 @@ function createCalendar(createYear, elementHtml) {
     calendarMonthInner.className = 'calendar__month-inner calendar__month-inner_js';
     let calendarMonthName = document.createElement('div');
     calendarMonthName.className = 'calendar__month-name';
-    calendarMonthName.innerHTML = months[month];
+    calendarMonthName.innerHTML = months[month] + ' ' + year;
     calendarMonthInner.insertAdjacentElement('afterbegin', calendarMonthName);
 
     let calendarList = document.createElement('ul');
