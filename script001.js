@@ -1,5 +1,7 @@
 // Кількість значеній яку рендерить
 let quantityRenderValue = 200;
+// З якого року буде стартувати календарь
+const yearStart = 2022;
 
 const writeInput = document.querySelectorAll('.writeInput_js');
 const buttonColorJs = document.querySelector('#button-color_js');
@@ -57,12 +59,11 @@ audioClick.currentTime = 0;
 
 // <<<<<<<<<<<<<<<<<<<<<<<<<<< календарь >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 // Рендерить навігацію років в календарь
-function renderCalendarYear(renderHtmlElement) {
+function renderCalendarYear(renderHtmlElement, calendarYearStart = yearStart) {
   renderHtmlElement.innerHTML = '';
-  const yearStart = 2015;
   let date = new Date();
 
-  for (let index = yearStart; index <= date.getFullYear(); index++) {
+  for (let index = calendarYearStart; index <= date.getFullYear(); index++) {
     let activeClass = '';
     if (index === date.getFullYear()) {
       activeClass = 'active';
@@ -78,7 +79,7 @@ function renderCalendarYear(renderHtmlElement) {
   }, 10);
 }
 
-// В календарі при кліку на рік рендерить цей рік
+// В календарі при кліку на рік рендерить цей рік і міняє активний рік
 function showsСalendar(elementClass) {
   const calendarYearBtns = document.querySelectorAll(elementClass);
 
@@ -96,10 +97,11 @@ function showsСalendar(elementClass) {
 }
 // создает календарь переданого года и рендерит в переданный html елемент
 function createCalendar(createYear, elementHtml, resetRenderCalendarYear = true) {
+  // рендерить навігацію років тільки при загрузці сторінки
   if (resetRenderCalendarYear) {
     renderCalendarYear(calendarYear);
   }
-  let year = createYear; // год
+  let year = Number(createYear); // год
   let month = 0; //Месяц (от 0 до 11)
   let dayWeek; // день нидели в котором начинается месяц 0- ето воскресения (Недiля)
   let monthDeyLength; //количество дней в месяце
@@ -112,8 +114,6 @@ function createCalendar(createYear, elementHtml, resetRenderCalendarYear = true)
     renderCalendar(elementHtml);
     month++;
   }
-
-  // <<<<<<<<<<<<<<<<<<<<<<<<<<< function >>>>>>>>>>>>>>>>>>>>>>>>>>>>
   // создает дату
   function createDate(year, month, dey) {
     let date = new Date(year, month, dey); //(год  / месяц от 0 до 11 / число)

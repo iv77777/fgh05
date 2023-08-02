@@ -697,6 +697,7 @@ body {
   margin-bottom: 5px;
   font-size: 40px;
   display: flex;
+  justify-content: center;
   overflow: auto;
 }
 .calendar__year-btn {
