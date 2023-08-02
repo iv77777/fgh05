@@ -188,9 +188,7 @@ function createCalendar(createYear, elementHtml, resetRenderCalendarYear = true)
         className = '_active';
       }
       const calendarDey = `
-      <li class="calendar__dey calendar__dey_js ${className} _dey${i}-${month}-${year}" 
-             data-dey="${i} ${months[month]} ${year}" 
-             data-deydata="${i}-${month}-${year}">
+      <li class="calendar__dey calendar__dey_js ${className}" data-numberday="${i}" data-month="${month}" data-year="${year}">
          ${i}
       </li>
     `;
@@ -440,7 +438,6 @@ function renderValuePopup(arrayValue) {
         <td class="${arrayValue.background} td__value">${arrayValue.value}</td>
       </tr>
   `;
-  // popupTable.insertAdjacentHTML('afterbegin', valueHtml);
   popupTable.insertAdjacentHTML('beforeend', valueHtml);
 }
 // иметирует польот значения до иконки
@@ -2030,13 +2027,12 @@ calendarPopap.addEventListener('click', (e) => {
     ) {
       const calendarPopap = document.querySelector('.calendar-popap_js');
       calendarPopap.classList.remove('_active'); //скрывает календарь
-      calendarBtn.innerHTML = e.target.dataset.dey;
       const popupReverse = document.querySelector('.popup__reverse_js');
 
       if (popupReverse.classList.contains('_reverse') || popupDey.classList.contains('_active')) {
         scrollDey1(e.target.dataset.deydata);
       } else {
-        scrollDey2(e.target.dataset.deydata);
+        renderDay(e.target.dataset.numberday, e.target.dataset.month, e.target.dataset.year);
       }
     }
     calendarMonthInner.classList.toggle('_active'); //маштабирует месяц
@@ -2073,6 +2069,25 @@ calendarPopap.addEventListener('click', (e) => {
     }
   }
 });
+function renderDay(day, month, year) {
+  let arrayValue = getLocalStorage(oneInputValue, false);
+  const popupTable = document.querySelector('.popup__table_js');
+
+  popupTable.innerHTML = '';
+  if (arrayValue) {
+    for (let index = 0; index < arrayValue.length; index++) {
+      if (Number(year) === arrayValue[index].year) {
+        if (Number(month) + 1 === arrayValue[index].month) {
+          if (Number(day) === arrayValue[index].numberDeta) {
+            renderValuePopup(arrayValue[index]);
+          }
+        }
+      }
+    }
+  }
+
+  removeClassAllTimeout('._teblepopup-active', 1000);
+}
 
 function scrollDey1(data) {
   const scrolElement = document.querySelector(`._table${data}`);
@@ -2080,20 +2095,7 @@ function scrollDey1(data) {
     scrolling(scrolElement.offsetTop - 73);
   }
 }
-function scrollDey2(data) {
-  const scrolElement = document.querySelector(`._teblepopup${data}`);
-  if (scrolElement) {
-    scrolElement.classList.add('_active-scrol-tim');
-    scrolElement.classList.add('_active-scrol');
-    setTimeout(() => {
-      scrolElement.classList.remove('_active-scrol');
-    }, 400);
-    setTimeout(() => {
-      scrolElement.classList.remove('_active-scrol-tim');
-    }, 6000);
-    scrolling(scrolElement.offsetTop);
-  }
-}
+
 function scrollDey3(data) {
   let data1 = data.split('-');
   let data2 = `${data1[1]}-${data1[2]}`;
