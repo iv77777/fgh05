@@ -2123,6 +2123,7 @@ function scrolling(top) {
   }
 }
 
+// <<<<<<<<<<<<<<<<<<<<<<<<<<<<< Копіює з LocalStorage>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 function GetLocalStorageInPopup() {
   const popupLocalStorageGet = document.querySelector('.popup-LocalStorage_get_js');
   popupLocalStorageGet.classList.add('active');
@@ -2150,10 +2151,28 @@ function PopupLocalStorageCopy() {
   //поместити в буфер обмена
   navigator.clipboard
     .writeText(JSON.stringify(LocalStorageValueAll))
-    .then(() => {
-      console.log('ok');
-    })
+    .then(() => {})
     .catch((err) => {
       console.log(err);
     });
 }
+// <<<<<<<<<<<<<<<<<<<<<<<<<<<<< Копіює з LocalStorage>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+
+// <<<<<<<<<<<<<<<<<<<<<<<<<<<<< Сохраняє в LocalStorage>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+
+function PutLocalStorageInPopup() {
+  const popupLocalStoragePut = document.querySelector('.popup-LocalStorage_put_js');
+  popupLocalStoragePut.classList.add('active');
+}
+function closePopupLocalStoragePut() {
+  const popupLocalStoragePut = document.querySelector('.popup-LocalStorage_put_js');
+  popupLocalStoragePut.classList.remove('active');
+  document.querySelector('.popup-LocalStorage_put-textarea_js').value = '';
+}
+function PopupLocalStoragePut() {
+  let value = document.querySelector('.popup-LocalStorage_put-textarea_js').value;
+  // добавляем valueText в localStorage
+  localStorage.setItem('fgh-oneInputValue', value);
+  document.querySelector('.popup-LocalStorage_put-textarea_js').value = '';
+}
+// <<<<<<<<<<<<<<<<<<<<<<<<<<<<< Сохраняє в LocalStorage>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>

@@ -18,7 +18,7 @@
   <!-- //fonts -->
   <title>V-05</title>
   <link rel="stylesheet" href="reset.css">
-  <link rel="stylesheet" href="style001.css?_31">
+  <link rel="stylesheet" href="style001.css?_32">
 </head>
 
 <body class="unselectable">
@@ -105,6 +105,7 @@
     </div>
 
     <button class="button-LocalStorage" onclick="GetLocalStorageInPopup()">Получити</button>
+    <button class="button-LocalStorage" onclick="PutLocalStorageInPopup()">Вставити</button>
   </div>
 
   <div class="popup popup_js">
@@ -230,8 +231,7 @@
   <div class="calendar-popap calendar-popap_js">
     <div class="calendar__container">
       <div class="calendar__year calendar__year_js">
-        <!-- <button class="calendar__year-btn calendar__year-2022_js">2022</button>
-        <button class="calendar__year-btn active  calendar__year-2023_js">2023</button> -->
+        <!-- рендерить Роки календаря -->
       </div>
       <button class="popup__close calendar-popup__close_js"></button>
       <div class="calendar__month-wrapper calendar__month-wrapper_js">
@@ -242,7 +242,7 @@
   </div>
 
   <div class="popup-LocalStorage_get popup-LocalStorage_get_js">
-    <button class="popup-LocalStorage_btn-copy" onclick="PopupLocalStorageCopy()">Скопіювати</button>
+    <button class="popup-LocalStorage_btn" onclick="PopupLocalStorageCopy()">Скопіювати</button>
     <button class="popup__close" onclick="closePopupLocalStorageGet()"></button>
     <div class="popup-LocalStorage_get-content popup-LocalStorage_get-content_js">
       <div class="popup-LocalStorage_get-loader">
@@ -251,8 +251,19 @@
     </div>
   </div>
 
+
+  <div class="popup-LocalStorage_put popup-LocalStorage_put_js">
+    <button class="popup-LocalStorage_btn" onclick="PopupLocalStoragePut()">Перезаписати</button>
+    <button class="popup__close" onclick="closePopupLocalStoragePut()"></button>
+    <div class="popup-LocalStorage_put-content popup-LocalStorage_put-content_js">
+      <textarea class="popup-LocalStorage_put-textarea popup-LocalStorage_put-textarea_js"></textarea>
+    </div>
+  </div>
+
+
+
   <script src="./smoothscroll.js"></script>
-  <script src="script001.js?_31"></script>
+  <script src="script001.js?_32"></script>
 </body>
 
 </html>
