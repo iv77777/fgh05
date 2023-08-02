@@ -40,26 +40,12 @@ const popupTableLength = document.querySelector('.popup__table-length_js');
 const popupTableLengthAll = document.querySelector('.popup__table-length-all_js');
 const popupTableAddBtn = document.querySelector('.popup__table-add-btn_js');
 
-const calendarYear2022 = document.querySelector('.calendar__year-2022_js');
-const calendarYear2023 = document.querySelector('.calendar__year-2023_js');
+const calendarYear = document.querySelector('.calendar__year_js');
 
 // ключи
 const keyActiveColor = 'fgh-activeColor';
 const inputValue = 'fgh-inputValue';
 const oneInputValue = 'fgh-oneInputValue';
-
-calendarYear2022.addEventListener('click', () => {
-  calendarYear2022.classList.add('active');
-  calendarYear2023.classList.remove('active');
-  // создает календарь переданого года и рендерит в переданный html елемент
-  createCalendar(2022, calendarMonthWrapper);
-});
-calendarYear2023.addEventListener('click', () => {
-  calendarYear2023.classList.add('active');
-  calendarYear2022.classList.remove('active');
-  // создает календарь переданого года и рендерит в переданный html елемент
-  createCalendar(2023, calendarMonthWrapper);
-});
 
 // Польот значений
 const audioFly = new Audio('mp3/flight.mp3');
@@ -69,9 +55,50 @@ audioFly.currentTime = 0;
 const audioClick = new Audio('mp3/click.mp3');
 audioClick.currentTime = 0;
 
-// <<<<<<<<<<<<<<<< function >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+// <<<<<<<<<<<<<<<<<<<<<<<<<<< календарь >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+// Рендерить навігацію років в календарь
+function renderCalendarYear(renderHtmlElement) {
+  renderHtmlElement.innerHTML = '';
+  const yearStart = 2015;
+  let date = new Date();
+
+  for (let index = yearStart; index <= date.getFullYear(); index++) {
+    let activeClass = '';
+    if (index === date.getFullYear()) {
+      activeClass = 'active';
+    }
+    let yearHtml = `
+      <button class="calendar__year-btn  ${activeClass} calendar__year-btn_js" data-year="${index}">${index}</button>
+    `;
+    renderHtmlElement.insertAdjacentHTML('beforeend', yearHtml);
+  }
+
+  setTimeout(() => {
+    showsСalendar('.calendar__year-btn_js');
+  }, 10);
+}
+
+// В календарі при кліку на рік рендерить цей рік
+function showsСalendar(elementClass) {
+  const calendarYearBtns = document.querySelectorAll(elementClass);
+
+  calendarYearBtns.forEach((element1) => {
+    element1.addEventListener('click', () => {
+      calendarYearBtns.forEach((element2) => {
+        element2.classList.remove('active');
+      });
+      element1.classList.add('active');
+
+      // создает календарь переданого года и рендерит в переданный html елемент
+      createCalendar(element1.dataset.year, calendarMonthWrapper, false);
+    });
+  });
+}
 // создает календарь переданого года и рендерит в переданный html елемент
-function createCalendar(createYear, elementHtml) {
+function createCalendar(createYear, elementHtml, resetRenderCalendarYear = true) {
+  if (resetRenderCalendarYear) {
+    renderCalendarYear(calendarYear);
+  }
   let year = createYear; // год
   let month = 0; //Месяц (от 0 до 11)
   let dayWeek; // день нидели в котором начинается месяц 0- ето воскресения (Недiля)
@@ -173,6 +200,8 @@ function createCalendar(createYear, elementHtml) {
     htmlElement.append(calendarMonthInner);
   }
 }
+// <<<<<<<<<<<<<<<<<<<<<<<<<<< календарь >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+
 // <<<<<<<<<<<<<<<<<<<<<<<<<<< function >>>>>>>>>>>>>>>>>>>>>>>>>>>>
 // якщо в LocalStorage є обєк з такою датою то верне true якщо нема то false
 function checkAvailabilityValueInLocalStorage(year, month, day) {
