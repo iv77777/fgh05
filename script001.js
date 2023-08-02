@@ -1,3 +1,6 @@
+// Кількість значеній яку рендерить
+let quantityRenderValue = 200;
+
 const writeInput = document.querySelectorAll('.writeInput_js');
 const buttonColorJs = document.querySelector('#button-color_js');
 const inputColor = document.querySelectorAll('.inputColor_js');
@@ -40,27 +43,22 @@ const popupTableAddBtn = document.querySelector('.popup__table-add-btn_js');
 const calendarYear2022 = document.querySelector('.calendar__year-2022_js');
 const calendarYear2023 = document.querySelector('.calendar__year-2023_js');
 
+// ключи
+const keyActiveColor = 'fgh-activeColor';
+const inputValue = 'fgh-inputValue';
+const oneInputValue = 'fgh-oneInputValue';
+
 calendarYear2022.addEventListener('click', () => {
   calendarYear2022.classList.add('active');
   calendarYear2023.classList.remove('active');
   // создает календарь переданого года и рендерит в переданный html елемент
   createCalendar(2022, calendarMonthWrapper);
-
-  let arrayValue = getLocalStorage(oneInputValue, false);
-  arrayValue.forEach((element) => {
-    addActiveDeyCalendar(element);
-  });
 });
 calendarYear2023.addEventListener('click', () => {
   calendarYear2023.classList.add('active');
   calendarYear2022.classList.remove('active');
   // создает календарь переданого года и рендерит в переданный html елемент
   createCalendar(2023, calendarMonthWrapper);
-
-  let arrayValue = getLocalStorage(oneInputValue, false);
-  arrayValue.forEach((element) => {
-    addActiveDeyCalendar(element);
-  });
 });
 
 // Польот значений
@@ -70,14 +68,6 @@ audioFly.currentTime = 0;
 // клик по клавиатури
 const audioClick = new Audio('mp3/click.mp3');
 audioClick.currentTime = 0;
-
-// ключи
-const keyActiveColor = 'fgh-activeColor';
-const inputValue = 'fgh-inputValue';
-const oneInputValue = 'fgh-oneInputValue';
-
-// создает календарь переданого года и рендерит в переданный html елемент
-createCalendar(2023, calendarMonthWrapper);
 
 // <<<<<<<<<<<<<<<< function >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 // создает календарь переданого года и рендерит в переданный html елемент
@@ -166,8 +156,12 @@ function createCalendar(createYear, elementHtml) {
     }
 
     for (let i = 1; i < monthDeyLength + 1; i++) {
+      let className = '';
+      if (checkAvailabilityValueInLocalStorage(year, month + 1, i)) {
+        className = '_active';
+      }
       const calendarDey = `
-      <li class="calendar__dey calendar__dey_js _dey${i}-${month}-${year}" 
+      <li class="calendar__dey calendar__dey_js ${className} _dey${i}-${month}-${year}" 
              data-dey="${i} ${months[month]} ${year}" 
              data-deydata="${i}-${month}-${year}">
          ${i}
@@ -178,8 +172,30 @@ function createCalendar(createYear, elementHtml) {
     calendarMonthInner.insertAdjacentElement('beforeend', calendarList);
     htmlElement.append(calendarMonthInner);
   }
-  // <<<<<<<<<<<<<<<<<<<<<<<<<<< function >>>>>>>>>>>>>>>>>>>>>>>>>>>>
 }
+// <<<<<<<<<<<<<<<<<<<<<<<<<<< function >>>>>>>>>>>>>>>>>>>>>>>>>>>>
+// якщо в LocalStorage є обєк з такою датою то верне true якщо нема то false
+function checkAvailabilityValueInLocalStorage(year, month, day) {
+  let arrayValue = getLocalStorage(oneInputValue, false);
+  if (arrayValue) {
+    for (let index = 0; index < arrayValue.length; index++) {
+      if (year === arrayValue[index].year) {
+        if (month === arrayValue[index].month) {
+          if (day === arrayValue[index].numberDeta) {
+            return true;
+          } else {
+            false;
+          }
+        } else {
+          break;
+        }
+      } else {
+        break;
+      }
+    }
+  }
+}
+// <<<<<<<<<<<<<<<<<<<<<<<<<<< function >>>>>>>>>>>>>>>>>>>>>>>>>>>>
 // Уберает активный цвет input
 function removeActiveColor() {
   inputColor.forEach((item) => {
@@ -348,22 +364,6 @@ function changeBgNumbers(color) {
   numberDelete.style.backgroundColor = color;
 }
 
-// выдиляет дни в календаре
-function addActiveDeyCalendar(obgectDey) {
-  const calendarDeyAll = document.querySelectorAll('.calendar__dey_js ');
-  calendarDeyAll.forEach((element) => {
-    element.classList.remove('_active');
-  });
-
-  setTimeout(() => {
-    const calendarDey = calendarMonthWrapper.querySelector(
-      `._dey${obgectDey.numberDeta}-${obgectDey.month - 1}-${obgectDey.year}`,
-    );
-    if (calendarDey) {
-      calendarDey.classList.add('_active');
-    }
-  }, 1);
-}
 function removeClassAllTimeout(className, timeout) {
   const allClass = document.querySelectorAll(className);
   setTimeout(() => {
@@ -373,7 +373,6 @@ function removeClassAllTimeout(className, timeout) {
   }, timeout);
 }
 
-let quantityRenderValue = 200;
 function addRenderValuePopup(arrayValue, indexStart = 0, indexAnd = quantityRenderValue) {
   arrayValue.reverse();
   popupTableLengthAll.innerHTML = arrayValue.length;
@@ -408,8 +407,6 @@ function renderValuePopup(arrayValue) {
   if (!arrayValue.value1) {
     arrayValue.value1 = '';
   }
-  // выдиляет дни в календаре
-  addActiveDeyCalendar(arrayValue);
 
   let valueHtml = `
      <tr class="popup__table-tr_js _teblepopup _teblepopup-active ${arrayValue.numberDeta}-${
@@ -790,10 +787,9 @@ document.addEventListener('click', (e) => {
 
   if (e.target.closest('.calendar__btn_js')) {
     calendarPopap.classList.add('_active');
-    let arrayValue = getLocalStorage(oneInputValue, false);
-    arrayValue.forEach((element) => {
-      addActiveDeyCalendar(element);
-    });
+    // створює календарь текущего року і рендерит в переданний html елемент
+    let date = new Date();
+    createCalendar(date.getFullYear(), calendarMonthWrapper);
   }
 
   // при клики скрывает popupDey
@@ -1987,6 +1983,7 @@ const fon2 = document.querySelector('.fon2_js');
 calendarPopap.addEventListener('click', (e) => {
   if (e.target.closest('.calendar-popup__close_js')) {
     calendarPopap.classList.remove('_active');
+    calendarMonthWrapper.innerHTML = '';
   }
   if (e.target.closest('.fon2_js')) {
     const calendarMonthInner = calendarMonthWrapper.querySelectorAll('.calendar__month-inner_js');
@@ -2119,7 +2116,7 @@ function closePopupLocalStorageGet() {
   popupLocalStorageGet.classList.remove('active');
 }
 
-function PopupLocalStorageCopн() {
+function PopupLocalStorageCopy() {
   const popupLocalStorageGet = document.querySelector('.popup-LocalStorage_get_js');
   const LocalStorageValueAll = getLocalStorage('fgh-oneInputValue');
   const popupLocalStorageContent = popupLocalStorageGet.querySelector(
