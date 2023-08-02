@@ -183,14 +183,8 @@ function checkAvailabilityValueInLocalStorage(year, month, day) {
         if (month === arrayValue[index].month) {
           if (day === arrayValue[index].numberDeta) {
             return true;
-          } else {
-            false;
           }
-        } else {
-          break;
         }
-      } else {
-        break;
       }
     }
   }
