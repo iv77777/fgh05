@@ -197,6 +197,7 @@ function createCalendar(createYear, elementHtml, resetRenderCalendarYear = true)
     calendarMonthInner.insertAdjacentElement('beforeend', calendarList);
     htmlElement.append(calendarMonthInner);
   }
+  document.querySelector('.calendar__btn_js').classList.remove('timout');
 }
 // <<<<<<<<<<<<<<<<<<<<<<<<<<< календарь >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 
@@ -761,7 +762,7 @@ document.addEventListener('click', (e) => {
   }
 
   //при клики показует попап
-  if (e.target.closest('.buttons-img')) {
+  if (e.target.closest('.buttons-img_js')) {
     popup.classList.add('_active');
     fon.classList.add('_active');
     popupTableLength.innerHTML = 0;
@@ -806,10 +807,13 @@ document.addEventListener('click', (e) => {
   }
 
   if (e.target.closest('.calendar__btn_js')) {
-    calendarPopap.classList.add('_active');
-    // створює календарь текущего року і рендерит в переданний html елемент
-    let date = new Date();
-    createCalendar(date.getFullYear(), calendarMonthWrapper);
+    e.target.closest('.calendar__btn_js').classList.add('timout');
+    setTimeout(() => {
+      calendarPopap.classList.add('_active');
+      // створює календарь текущего року і рендерит в переданний html елемент
+      let date = new Date();
+      createCalendar(date.getFullYear(), calendarMonthWrapper);
+    }, 1);
   }
 
   // при клики скрывает popupDey
@@ -2073,20 +2077,22 @@ function renderDay(day, month, year) {
   let arrayValue = getLocalStorage(oneInputValue, false);
   const popupTable = document.querySelector('.popup__table_js');
 
+  let filterArray = [];
+
   popupTable.innerHTML = '';
   if (arrayValue) {
     for (let index = 0; index < arrayValue.length; index++) {
       if (Number(year) === arrayValue[index].year) {
         if (Number(month) + 1 === arrayValue[index].month) {
           if (Number(day) === arrayValue[index].numberDeta) {
-            renderValuePopup(arrayValue[index]);
+            filterArray.push(arrayValue[index]);
           }
         }
       }
     }
   }
-
-  removeClassAllTimeout('._teblepopup-active', 1000);
+  popupTableLength.innerHTML = '';
+  addRenderValuePopup(filterArray);
 }
 
 function scrollDey1(data) {
